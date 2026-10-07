@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { DEMO_WORKFLOW, DEMO_STATS } from './mockData';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+const API_URL = isLocalhost ? (import.meta.env.VITE_API_URL || 'http://localhost:5000') : '';
 
 const api = axios.create({
-  baseURL: `${API_URL}/api`,
+  baseURL: API_URL ? `${API_URL}/api` : '/api',
   headers: { 'Content-Type': 'application/json' },
   timeout: 60000,
 });
