@@ -163,19 +163,19 @@ export default function AgentActivityPage() {
           return (
             <div
               key={agent.name}
-              className={`glass-card p-5 rounded-xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.01] ${
-                isBusy ? 'border-brand-500/40 shadow-lg shadow-brand-500/5' : 'border-white/5'
+              className={`glass-card p-5 rounded-xl border flex flex-col justify-between transition-all duration-300 hover:scale-[1.02] ${
+                isBusy ? 'border-brand-500/40 shadow-glow-sm bg-brand-950/10' : 'border-white/5 hover:border-white/20'
               }`}
             >
               <div>
                 {/* Agent Header */}
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-400">
+                    <div className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-400 shadow-sm">
                       <Bot size={20} />
                     </div>
                     <div>
-                      <h3 className="text-sm font-bold text-white">{agent.name}</h3>
+                      <h3 className="font-heading text-sm font-bold text-white tracking-tight">{agent.name}</h3>
                       <div className="text-[10px] text-gray-500 font-mono">Autonomous Subsystem</div>
                     </div>
                   </div>

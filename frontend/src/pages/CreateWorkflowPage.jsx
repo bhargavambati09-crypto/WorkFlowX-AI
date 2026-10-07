@@ -86,7 +86,7 @@ const CreateWorkflowPage = () => {
               value={form.title}
               onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
             />
-            <p className="text-xs text-gray-600 mt-1">A clear, concise title for the business problem</p>
+            <p className="text-xs text-gray-400 mt-1">A clear, concise title for the business problem</p>
           </div>
 
           <div>
@@ -99,9 +99,9 @@ const CreateWorkflowPage = () => {
               value={form.description}
               onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
             />
-            <div className="flex justify-between text-xs text-gray-600 mt-1">
+            <div className="flex justify-between text-xs text-gray-400 mt-1">
               <span>Be specific and include all relevant context</span>
-              <span className={form.description.length < 10 ? 'text-red-500' : 'text-gray-600'}>
+              <span className={form.description.length < 10 ? 'text-red-400' : 'text-gray-400 font-mono'}>
                 {form.description.length} chars
               </span>
             </div>
@@ -179,7 +179,7 @@ const CreateWorkflowPage = () => {
             <button key={ex.title} onClick={() => setForm(f => ({ ...f, title: ex.title, description: ex.desc }))}
               className="w-full text-left p-3 rounded-xl bg-white/3 hover:bg-white/5 border border-white/5 hover:border-brand-500/20 transition-all duration-200">
               <div className="text-sm font-medium text-gray-300">{ex.title}</div>
-              <div className="text-xs text-gray-600 mt-1">{ex.desc}</div>
+              <div className="text-xs text-gray-400 mt-1">{ex.desc}</div>
             </button>
           ))}
         </div>

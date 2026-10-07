@@ -302,40 +302,40 @@ export default function WorkflowDetailsPage() {
 
       {/* Workflow Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        <div className="stat-card">
-          <div className="text-xs text-gray-400 mb-1">Status</div>
+        <div className="stat-card p-5 hover:border-brand-500/40">
+          <div className="text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Status</div>
           <div className="flex items-center gap-2">
             <StatusBadge status={workflow.status} />
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="text-xs text-gray-400 mb-1">Priority</div>
+        <div className="stat-card p-5 hover:border-brand-500/40">
+          <div className="text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Priority</div>
           <div className="flex items-center gap-2">
             <PriorityBadge priority={workflow.priority || 'MEDIUM'} />
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="text-xs text-gray-400 mb-1">Business Impact</div>
-          <div className="text-sm font-semibold text-white capitalize">
+        <div className="stat-card p-5 hover:border-brand-500/40">
+          <div className="text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Business Impact</div>
+          <div className="font-heading text-base font-bold text-white capitalize tracking-tight">
             {workflow.business_impact || analysis.business_impact || 'Moderate'}
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="text-xs text-gray-400 mb-1">Task Progress</div>
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-sm font-semibold text-white">{completedTasks}/{tasks.length}</span>
-            <span className="text-xs font-mono text-brand-400">{progressPct}%</span>
+        <div className="stat-card p-5 hover:border-brand-500/40">
+          <div className="text-xs font-mono uppercase tracking-wider text-gray-400 mb-2">Task Progress</div>
+          <div className="flex items-center justify-between mb-2">
+            <span className="font-heading text-sm font-bold text-white">{completedTasks}/{tasks.length}</span>
+            <span className="text-xs font-mono text-brand-400 font-bold">{progressPct}%</span>
           </div>
           <ProgressBar value={progressPct} />
         </div>
 
-        <div className="stat-card flex items-center justify-between">
+        <div className="stat-card p-5 flex items-center justify-between hover:border-brand-500/40">
           <div>
-            <div className="text-xs text-gray-400 mb-0.5">Workflow Health</div>
-            <div className="text-xs text-gray-500">Autonomous Score</div>
+            <div className="text-xs font-mono uppercase tracking-wider text-gray-400 mb-1">Workflow Health</div>
+            <div className="text-[11px] text-gray-500">Autonomous Score</div>
           </div>
           <HealthScore score={workflow.health_score || (workflow.status === 'failed' ? 35 : workflow.status === 'replanning' ? 62 : 92)} />
         </div>

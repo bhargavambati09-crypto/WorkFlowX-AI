@@ -39,8 +39,8 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
             </div>
             {!collapsed && (
               <div>
-                <div className="font-bold text-white text-sm">WorkFlowX AI</div>
-                <div className="text-[10px] text-gray-500">Multi-Agent Intelligence</div>
+                <div className="font-heading font-bold text-white text-sm tracking-tight">WorkFlowX AI</div>
+                <div className="text-[10px] text-gray-500 font-mono">Multi-Agent Intelligence</div>
               </div>
             )}
           </div>
@@ -116,8 +116,8 @@ export const TopBar = ({ title, subtitle, actions }) => {
   return (
     <div className="flex items-center justify-between mb-8">
       <div>
-        <h1 className="text-2xl font-bold text-white">{title}</h1>
-        {subtitle && <p className="text-gray-500 text-sm mt-1">{subtitle}</p>}
+        <h1 className="font-heading text-2xl lg:text-3xl font-bold tracking-tight text-white">{title}</h1>
+        {subtitle && <p className="text-gray-400 text-sm mt-1">{subtitle}</p>}
       </div>
       {actions && <div className="flex items-center gap-3">{actions}</div>}
     </div>

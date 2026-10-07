@@ -210,11 +210,11 @@ export default function JudgeModePage() {
               <span className="text-xs font-mono font-bold px-2 py-0.5 rounded bg-brand-500/20 text-brand-400 border border-brand-500/30">
                 PHASE {currentStep} OF 11
               </span>
-              <h2 className="text-xl font-extrabold text-white">
+              <h2 className="font-heading text-xl font-extrabold text-white tracking-tight">
                 {STEPS[currentStep - 1].title}
               </h2>
             </div>
-            <p className="text-xs text-gray-400 mt-1">
+            <p className="text-xs text-gray-400 mt-1 font-sans">
               {STEPS[currentStep - 1].subtitle}
             </p>
           </div>
@@ -247,14 +247,14 @@ export default function JudgeModePage() {
         <div className="min-h-[280px] flex flex-col justify-center">
           {currentStep === 1 && (
             <div className="space-y-4 animate-fade-in">
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-                <div className="text-xs text-brand-400 font-mono font-bold mb-1">
+              <div className="p-5 rounded-xl bg-white/5 border border-white/10 backdrop-blur-sm">
+                <div className="text-xs text-brand-400 font-mono font-bold mb-1.5 uppercase tracking-wider">
                   OFFICIAL HACKATHON DEMO PROBLEM STATEMENT:
                 </div>
-                <div className="text-lg font-semibold text-white">
+                <div className="font-heading text-xl font-bold text-white tracking-tight">
                   "A customer was charged for an order, but the order was not created."
                 </div>
-                <p className="text-xs text-gray-400 mt-2">
+                <p className="text-xs text-gray-300 mt-2.5 leading-relaxed">
                   System will automatically analyze this issue, assess severity, categorize it under Payment & Fulfillment, plan recovery steps, coordinate multi-agent dispatch, monitor execution, adaptively recover from simulated failure, and trigger human approval.
                 </p>
               </div>
@@ -480,21 +480,21 @@ export default function JudgeModePage() {
                   Demonstration Concluded • Key Evaluation Metrics
                 </div>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
-                  <div className="stat-card p-3">
-                    <div className="text-[10px] text-gray-500 font-mono">AUTONOMOUS RECOVERY</div>
-                    <div className="text-lg font-bold text-emerald-400">100%</div>
+                  <div className="stat-card p-4 transition-all duration-300 hover:border-emerald-500/40 hover:shadow-glow-emerald">
+                    <div className="text-[10px] text-gray-400 font-mono tracking-wider">AUTONOMOUS RECOVERY</div>
+                    <div className="text-xl font-heading font-bold text-emerald-400 mt-1">100%</div>
                   </div>
-                  <div className="stat-card p-3">
-                    <div className="text-[10px] text-gray-500 font-mono">REPLANNING LATENCY</div>
-                    <div className="text-lg font-bold text-amber-400">1.2s</div>
+                  <div className="stat-card p-4 transition-all duration-300 hover:border-amber-500/40">
+                    <div className="text-[10px] text-gray-400 font-mono tracking-wider">REPLANNING LATENCY</div>
+                    <div className="text-xl font-heading font-bold text-amber-400 mt-1">1.2s</div>
                   </div>
-                  <div className="stat-card p-3">
-                    <div className="text-[10px] text-gray-500 font-mono">HUMAN GATES TRIGGERED</div>
-                    <div className="text-lg font-bold text-blue-400">1 Gate</div>
+                  <div className="stat-card p-4 transition-all duration-300 hover:border-blue-500/40 hover:shadow-glow-cyan">
+                    <div className="text-[10px] text-gray-400 font-mono tracking-wider">HUMAN GATES TRIGGERED</div>
+                    <div className="text-xl font-heading font-bold text-blue-400 mt-1">1 Gate</div>
                   </div>
-                  <div className="stat-card p-3">
-                    <div className="text-[10px] text-gray-500 font-mono">GEMINI MODEL</div>
-                    <div className="text-lg font-bold text-purple-400">1.5 Pro</div>
+                  <div className="stat-card p-4 transition-all duration-300 hover:border-purple-500/40 hover:shadow-glow-sm">
+                    <div className="text-[10px] text-gray-400 font-mono tracking-wider">GEMINI MODEL</div>
+                    <div className="text-xl font-heading font-bold text-purple-400 mt-1">1.5 Pro</div>
                   </div>
                 </div>
               </div>

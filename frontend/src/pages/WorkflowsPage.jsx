@@ -118,11 +118,11 @@ const WorkflowsPage = () => {
                 <GitBranch size={22} className="text-brand-400" />
               </div>
               <div className="flex-1 min-w-0">
-                <h3 className="font-bold text-white group-hover:text-brand-300 transition-colors truncate">{wf.title}</h3>
-                <p className="text-sm text-gray-500 mt-1 truncate">{wf.description}</p>
-                <div className="flex items-center gap-3 mt-2 text-xs text-gray-600">
+                <h3 className="font-heading font-bold text-white group-hover:text-brand-300 transition-colors truncate text-base tracking-tight">{wf.title}</h3>
+                <p className="text-sm text-gray-400 mt-1 truncate">{wf.description}</p>
+                <div className="flex items-center gap-3 mt-2 text-xs text-gray-400">
                   {wf.department && <span>📍 {wf.department}</span>}
-                  <span className="flex items-center gap-1"><Clock size={10} /> {timeAgo(wf.created_at)}</span>
+                  <span className="flex items-center gap-1 font-mono"><Clock size={11} /> {timeAgo(wf.created_at)}</span>
                   {wf.category && <span>🏷 {wf.category}</span>}
                 </div>
               </div>

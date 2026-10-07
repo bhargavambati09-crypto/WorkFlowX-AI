@@ -66,46 +66,46 @@ export default function AnalyticsPage() {
 
       {/* Top Level Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="stat-card">
-          <div className="flex items-center justify-between text-gray-400 text-xs mb-2">
-            <span>Total Workflows Managed</span>
+        <div className="stat-card p-5 hover:border-brand-500/40 hover:shadow-glow-sm">
+          <div className="flex items-center justify-between text-gray-400 text-xs font-mono uppercase tracking-wider mb-2">
+            <span>Workflows Managed</span>
             <Activity size={16} className="text-brand-400" />
           </div>
-          <div className="text-3xl font-extrabold text-white">{stats.totalWorkflows}</div>
-          <div className="text-[11px] text-gray-500 mt-2 flex items-center gap-1 font-mono">
+          <div className="text-3xl font-heading font-extrabold text-white tracking-tight">{stats.totalWorkflows}</div>
+          <div className="text-[11px] text-gray-400 mt-2 flex items-center gap-1 font-mono">
             <span className="text-brand-400 font-bold">{stats.activeWorkflows} active</span> • {stats.completedWorkflows} completed
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="flex items-center justify-between text-gray-400 text-xs mb-2">
-            <span>Autonomous Recovery Rate</span>
+        <div className="stat-card p-5 hover:border-amber-500/40">
+          <div className="flex items-center justify-between text-gray-400 text-xs font-mono uppercase tracking-wider mb-2">
+            <span>Autonomous Recovery</span>
             <RotateCcw size={16} className="text-amber-400" />
           </div>
-          <div className="text-3xl font-extrabold text-white">99.4%</div>
-          <div className="text-[11px] text-gray-500 mt-2 font-mono">
+          <div className="text-3xl font-heading font-extrabold text-white tracking-tight">99.4%</div>
+          <div className="text-[11px] text-gray-400 mt-2 font-mono">
             <span className="text-amber-400 font-bold">{stats.replannedWorkflows || 1} replanned</span> without downtime
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="flex items-center justify-between text-gray-400 text-xs mb-2">
-            <span>Avg. Resolution Latency</span>
+        <div className="stat-card p-5 hover:border-emerald-500/40 hover:shadow-glow-emerald">
+          <div className="flex items-center justify-between text-gray-400 text-xs font-mono uppercase tracking-wider mb-2">
+            <span>Avg. Resolution</span>
             <Clock size={16} className="text-emerald-400" />
           </div>
-          <div className="text-3xl font-extrabold text-white">4m 12s</div>
+          <div className="text-3xl font-heading font-extrabold text-white tracking-tight">4m 12s</div>
           <div className="text-[11px] text-emerald-400 mt-2 font-mono flex items-center gap-1">
             <TrendingUp size={12} /> 84% faster than manual triage
           </div>
         </div>
 
-        <div className="stat-card">
-          <div className="flex items-center justify-between text-gray-400 text-xs mb-2">
-            <span>Agent Fleet Health</span>
+        <div className="stat-card p-5 hover:border-purple-500/40 hover:shadow-glow-sm">
+          <div className="flex items-center justify-between text-gray-400 text-xs font-mono uppercase tracking-wider mb-2">
+            <span>Fleet Health</span>
             <Shield size={16} className="text-purple-400" />
           </div>
-          <div className="text-3xl font-extrabold text-white">{stats.averageHealthScore || 96}/100</div>
-          <div className="text-[11px] text-gray-500 mt-2 font-mono">
+          <div className="text-3xl font-heading font-extrabold text-white tracking-tight">{stats.averageHealthScore || 96}/100</div>
+          <div className="text-[11px] text-gray-400 mt-2 font-mono">
             7 active autonomous agents monitored
           </div>
         </div>

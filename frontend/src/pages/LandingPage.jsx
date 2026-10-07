@@ -39,7 +39,7 @@ const LandingPage = () => {
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center glow-brand">
               <Zap size={16} className="text-white" />
             </div>
-            <span className="font-bold text-lg">WorkFlowX AI</span>
+            <span className="font-heading font-bold text-lg tracking-tight">WorkFlowX AI</span>
           </div>
           <div className="flex items-center gap-4">
             <Link to="/login" className="btn-secondary py-2 px-4 text-sm">Sign In</Link>
@@ -54,18 +54,18 @@ const LandingPage = () => {
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[400px] bg-brand-600/10 rounded-full blur-3xl" />
         
         <div className="max-w-5xl mx-auto text-center relative">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm mb-8">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-brand-500/10 border border-brand-500/20 text-brand-400 text-sm mb-8 backdrop-blur-md">
             <Bot size={14} />
-            <span>Autonomous Multi-Agent Workflow Intelligence</span>
+            <span className="font-mono text-xs uppercase tracking-wider">Autonomous Multi-Agent Workflow Intelligence</span>
           </div>
           
-          <h1 className="text-5xl lg:text-7xl font-extrabold mb-8 leading-tight">
+          <h1 className="font-heading text-5xl lg:text-7xl font-extrabold mb-8 leading-[1.1] tracking-tight">
             <span className="text-gradient-white">Turn Business Problems</span>
             <br />
             <span className="text-gradient">Into Autonomous Workflows</span>
           </h1>
           
-          <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12 leading-relaxed">
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
             WorkFlowX AI uses intelligent multi-agent systems to analyze problems, 
             plan workflows, coordinate tasks, monitor execution, and dynamically adapt when things change.
           </p>
@@ -102,8 +102,8 @@ const LandingPage = () => {
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="text-xs uppercase tracking-widest text-red-400 font-semibold mb-4">The Problem</div>
-              <h2 className="text-4xl font-bold text-white mb-6">Organizations waste time on manual coordination</h2>
+              <div className="text-xs uppercase tracking-widest text-red-400 font-semibold mb-4 font-mono">The Problem</div>
+              <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">Organizations waste time on manual coordination</h2>
               <div className="space-y-3">
                 {[
                   'Manually decomposing problems into tasks',
@@ -121,8 +121,8 @@ const LandingPage = () => {
               </div>
             </div>
             <div className="glass-card p-8">
-              <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4">The Solution</div>
-              <h3 className="text-2xl font-bold text-white mb-6">WorkFlowX AI handles it autonomously</h3>
+              <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4 font-mono">The Solution</div>
+              <h3 className="font-heading text-2xl font-bold text-white mb-6 tracking-tight">WorkFlowX AI handles it autonomously</h3>
               <div className="space-y-3">
                 {[
                   'AI analyzes and decomposes problems automatically',
@@ -147,16 +147,16 @@ const LandingPage = () => {
       <section id="how-it-works" className="py-20 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4">How It Works</div>
-            <h2 className="text-4xl font-bold text-white">The Agentic Workflow Loop</h2>
+            <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4 font-mono">How It Works</div>
+            <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white tracking-tight">The Agentic Workflow Loop</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {steps.map((step) => (
               <div key={step.num} className="glass-card-hover p-6 relative">
                 <div className="text-4xl mb-3">{step.icon}</div>
                 <div className="text-xs font-mono text-brand-400 mb-2">{step.num}</div>
-                <h3 className="text-lg font-bold text-white mb-2">{step.title}</h3>
-                <p className="text-sm text-gray-500">{step.desc}</p>
+                <h3 className="font-heading text-lg font-bold text-white mb-2 tracking-tight">{step.title}</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{step.desc}</p>
               </div>
             ))}
           </div>
@@ -167,18 +167,18 @@ const LandingPage = () => {
       <section className="py-20 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4">Multi-Agent Architecture</div>
-            <h2 className="text-4xl font-bold text-white">7 Specialized AI Agents</h2>
-            <p className="text-gray-500 mt-4">Each agent has a distinct role, powered by Google Gemini AI</p>
+            <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4 font-mono">Multi-Agent Architecture</div>
+            <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white tracking-tight">7 Specialized AI Agents</h2>
+            <p className="text-gray-400 mt-4 text-base">Each agent has a distinct role, powered by Google Gemini AI</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {agents.map((agent) => (
               <div key={agent.name} className="glass-card-hover p-5">
-                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${agent.color} flex items-center justify-center text-lg mb-4`}>
+                <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${agent.color} flex items-center justify-center text-lg mb-4 shadow-sm`}>
                   {agent.icon}
                 </div>
-                <h3 className="font-bold text-white text-sm mb-2">{agent.name}</h3>
-                <p className="text-xs text-gray-500 leading-relaxed">{agent.desc}</p>
+                <h3 className="font-heading font-bold text-white text-base mb-2 tracking-tight">{agent.name}</h3>
+                <p className="text-xs text-gray-400 leading-relaxed">{agent.desc}</p>
               </div>
             ))}
           </div>
@@ -189,17 +189,17 @@ const LandingPage = () => {
       <section className="py-20 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4">Features</div>
-            <h2 className="text-4xl font-bold text-white">Enterprise-Grade Agentic AI</h2>
+            <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4 font-mono">Features</div>
+            <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white tracking-tight">Enterprise-Grade Agentic AI</h2>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {features.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="glass-card-hover p-6">
-                <div className="w-10 h-10 rounded-xl bg-brand-500/15 flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-xl bg-brand-500/15 border border-brand-500/20 flex items-center justify-center mb-4">
                   <Icon size={20} className="text-brand-400" />
                 </div>
-                <h3 className="font-bold text-white mb-2">{title}</h3>
-                <p className="text-sm text-gray-500">{desc}</p>
+                <h3 className="font-heading font-bold text-white text-lg mb-2 tracking-tight">{title}</h3>
+                <p className="text-sm text-gray-400 leading-relaxed">{desc}</p>
               </div>
             ))}
           </div>
@@ -209,8 +209,8 @@ const LandingPage = () => {
       {/* Tech Stack */}
       <section className="py-20 px-6 border-t border-white/5">
         <div className="max-w-6xl mx-auto text-center">
-          <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4">Technology Stack</div>
-          <h2 className="text-3xl font-bold text-white mb-12">Built with Enterprise-Grade Tools</h2>
+          <div className="text-xs uppercase tracking-widest text-brand-400 font-semibold mb-4 font-mono">Technology Stack</div>
+          <h2 className="font-heading text-3xl font-bold text-white mb-12 tracking-tight">Built with Enterprise-Grade Tools</h2>
           <div className="flex flex-wrap justify-center gap-4">
             {[
               { label: 'React + Vite', cat: 'Frontend' },
@@ -222,9 +222,9 @@ const LandingPage = () => {
               { label: 'Netlify', cat: 'Frontend Deploy' },
               { label: 'Render', cat: 'Backend Deploy' },
             ].map(({ label, cat }) => (
-              <div key={label} className="glass-card px-5 py-3 text-center">
-                <div className="text-sm font-semibold text-white">{label}</div>
-                <div className="text-xs text-gray-500">{cat}</div>
+              <div key={label} className="glass-card px-5 py-3 text-center hover:border-brand-500/30 transition-colors">
+                <div className="text-sm font-heading font-semibold text-white tracking-tight">{label}</div>
+                <div className="text-xs text-gray-500 font-mono mt-0.5">{cat}</div>
               </div>
             ))}
           </div>
@@ -234,7 +234,7 @@ const LandingPage = () => {
       {/* CTA */}
       <section className="py-24 px-6 border-t border-white/5">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-4xl font-bold text-white mb-6">
+          <h2 className="font-heading text-3xl lg:text-4xl font-bold text-white mb-6 tracking-tight">
             Ready to Transform Your Workflow?
           </h2>
           <p className="text-xl text-gray-400 mb-10">
