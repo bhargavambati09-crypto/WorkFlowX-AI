@@ -44,6 +44,15 @@ api.interceptors.response.use(
           }
         });
       }
+      if (url.includes('/auth/google')) {
+        return Promise.resolve({
+          data: {
+            message: 'Google authentication successful',
+            token: 'demo-jwt-preview-token',
+            user: { id: '00000000-0000-0000-0000-000000000001', name: 'Google User', email: 'google.user@workflowx.ai', role: 'user' },
+          }
+        });
+      }
       if (url.includes('/auth/me')) {
         const saved = localStorage.getItem('user');
         return Promise.resolve({
@@ -124,6 +133,7 @@ api.interceptors.response.use(
 export const authAPI = {
   register: (data) => api.post('/auth/register', data),
   login: (data) => api.post('/auth/login', data),
+  googleAuth: (data) => api.post('/auth/google', data),
   me: () => api.get('/auth/me'),
 };
 

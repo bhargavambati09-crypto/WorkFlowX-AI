@@ -702,6 +702,15 @@
       "id": "dafc7352-4789-47f5-87a9-9275d527f8c9",
       "created_at": "2026-10-07T08:55:59.022Z",
       "updated_at": "2026-10-07T08:55:59.022Z"
+    },
+    {
+      "name": "Google Tester",
+      "email": "test.google@workflowx.ai",
+      "password_hash": "$2a$10$MQbeYxNZh52VULaavzd8nePCs9uj0fRwNfOUsAqm7rU9I8BnfDVJu",
+      "role": "user",
+      "id": "fa8dc3c3-1792-4e13-9d53-22de81338edc",
+      "created_at": "2026-10-07T09:53:30.338Z",
+      "updated_at": "2026-10-07T09:53:30.338Z"
     }
   ]
 }

@@ -68,8 +68,58 @@ const login = async (req, res, next) => {
   }
 };
 
+const googleAuth = async (req, res, next) => {
+  try {
+    const { email, name, avatar } = req.body;
+    if (!email) {
+      return res.status(400).json({ error: 'Google account email is required' });
+    }
+
+    // Check if user profile already exists
+    let { data: user } = await supabase
+      .from('profiles').select('*').eq('email', email).single();
+
+    if (!user) {
+      // Create user automatically via Google Sign-up
+      const crypto = require('crypto');
+      const randomPassword = crypto.randomBytes(16).toString('hex');
+      const passwordHash = await bcrypt.hash(randomPassword, 10);
+      const displayName = name || email.split('@')[0];
+
+      const { data: newUser, error } = await supabase
+        .from('profiles')
+        .insert({
+          name: displayName,
+          email,
+          password_hash: passwordHash,
+          role: 'user',
+        })
+        .select('id, name, email, role, created_at')
+        .single();
+
+      if (error) throw error;
+      user = newUser;
+    }
+
+    // Issue JWT token
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    res.json({
+      message: 'Google authentication successful',
+      token,
+      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getMe = async (req, res) => {
   res.json({ user: req.user });
 };
 
-module.exports = { register, login, getMe };
+module.exports = { register, login, googleAuth, getMe };
