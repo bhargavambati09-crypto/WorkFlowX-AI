@@ -1,0 +1,707 @@
+{
+  "users": [
+    {
+      "name": "Hackathon Judge",
+      "email": "judge@workflowx.ai",
+      "id": "c65b7fca-6f2c-4b56-9da3-c84cccfca381",
+      "created_at": "2026-10-07T07:23:33.393Z",
+      "updated_at": "2026-10-07T07:23:33.393Z"
+    }
+  ],
+  "workflows": [
+    {
+      "id": "00000000-0000-0000-0000-000000000002",
+      "title": "A customer was charged for an order, but the order was not created.",
+      "description": "Customer was billed $129.00 on Stripe (txn_89410). Payment succeeded, but the downstream order creation queue timed out. The customer submitted an urgent complaint.",
+      "department": "Billing & Fulfillment",
+      "status": "awaiting_approval",
+      "priority": "HIGH",
+      "business_impact": "High customer churn risk & potential payment dispute",
+      "health_score": 95,
+      "created_by": "00000000-0000-0000-0000-000000000001",
+      "ai_analysis": {
+        "summary": "Payment transaction was charged successfully, but downstream order record was not generated due to an asynchronous timeout.",
+        "category": "Billing & Fulfillment",
+        "priority": "HIGH",
+        "confidence": 0.96,
+        "recommendations": [
+          "Verify Stripe charge transaction ID",
+          "Inspect database transaction logs for uncommitted order items",
+          "Execute customer refund or manual order recreation based on stock"
+        ],
+        "replanHistory": [
+          {
+            "timestamp": "2026-10-07T07:28:31.976Z",
+            "failedTask": "Simulate Warehouse Stock & Order Dispatch",
+            "reason": "Execution Agent was unable to complete task \"Simulate Warehouse Stock & Order Dispatch\". Reassigning to Manager Agent and adding manager oversight.",
+            "recoveryStrategy": "Reassign to Manager Agent with manager oversight"
+          },
+          {
+            "timestamp": "2026-10-07T07:31:17.305Z",
+            "failedTask": "Telemetry & SLA Breach Watcher",
+            "reason": "Monitoring Agent was unable to complete task \"Telemetry & SLA Breach Watcher\". Reassigning to Manager Agent and adding manager oversight.",
+            "recoveryStrategy": "Reassign to Manager Agent with manager oversight"
+          }
+        ],
+        "latestReplan": {
+          "reason": "Monitoring Agent was unable to complete task \"Telemetry & SLA Breach Watcher\". Reassigning to Manager Agent and adding manager oversight.",
+          "failedTask": "Telemetry & SLA Breach Watcher",
+          "failureAnalysis": "Agent failure - original agent unavailable or unable to complete task",
+          "recoveryStrategy": "Reassign to Manager Agent with manager oversight",
+          "newPlan": [
+            {
+              "title": "[RECOVERY] Telemetry & SLA Breach Watcher",
+              "description": "Recovery task: Monitor dispatch response latency and detect unexpected exceptions. - Reassigned from Monitoring Agent to Manager Agent after failure.",
+              "priority": "MEDIUM",
+              "assignedAgent": "Manager Agent",
+              "isReplacement": true,
+              "replaces": "Telemetry & SLA Breach Watcher",
+              "estimatedDuration": 45,
+              "requiresApproval": true,
+              "approvalReason": "Recovery task requires manager approval due to prior failure"
+            },
+            {
+              "title": "Manager Review and Oversight",
+              "description": "Manager to review recovery progress and ensure successful completion",
+              "priority": "HIGH",
+              "assignedAgent": "Manager Agent",
+              "isReplacement": false,
+              "replaces": "",
+              "estimatedDuration": 20,
+              "requiresApproval": false,
+              "approvalReason": ""
+            }
+          ],
+          "escalationRequired": false,
+          "escalationReason": "",
+          "requiresHumanApproval": true,
+          "humanApprovalReason": "Recovery from task failure requires human oversight",
+          "riskAssessment": "Moderate risk - backup agent assigned, additional verification added",
+          "preventionRecommendations": [
+            "Implement agent health checks",
+            "Add task retry logic"
+          ]
+        }
+      },
+      "created_at": "2026-10-07T06:28:27.423Z",
+      "updated_at": "2026-10-07T07:31:17.394Z",
+      "requires_approval": true,
+      "current_step": "Recovery: Reassign to Manager Agent with manager oversight"
+    },
+    {
+      "title": "Integration Test Incident",
+      "description": "Automated test problem description for system validation",
+      "department": "Operations",
+      "deadline": null,
+      "status": "draft",
+      "priority": "MEDIUM",
+      "created_by": "00000000-0000-0000-0000-000000000001",
+      "health_score": 100,
+      "created_at": "2026-10-07T08:28:42.330Z",
+      "updated_at": "2026-10-07T08:28:43.258Z",
+      "id": "71e377b4-4d39-4475-9829-4267e54a711d",
+      "tasks": [],
+      "logs": [],
+      "approvals": []
+    },
+    {
+      "title": "Integration Test Incident",
+      "description": "Automated test problem description for system validation",
+      "department": "Operations",
+      "deadline": null,
+      "status": "draft",
+      "priority": "MEDIUM",
+      "created_by": "00000000-0000-0000-0000-000000000001",
+      "health_score": 100,
+      "created_at": "2026-10-07T08:29:41.387Z",
+      "updated_at": "2026-10-07T08:29:42.548Z",
+      "id": "2db13990-3a35-455f-953f-b97e27838709",
+      "tasks": [],
+      "logs": [],
+      "approvals": []
+    }
+  ],
+  "tasks": [
+    {
+      "id": "00000000-0000-0000-0000-000000000011",
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "title": "Verify Payment Gateway Transaction",
+      "description": "Check Stripe charge status, capture token, and verify payment legitimacy.",
+      "assigned_agent": "Execution Agent",
+      "status": "completed",
+      "priority": "HIGH",
+      "task_order": 1,
+      "created_at": "2026-10-07T06:38:27.423Z"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000012",
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "title": "Inspect Order Database Records",
+      "description": "Search order fulfillment repository for orphan cart or uncommitted transactions.",
+      "assigned_agent": "Coordination Agent",
+      "status": "completed",
+      "priority": "HIGH",
+      "task_order": 2,
+      "created_at": "2026-10-07T06:46:47.423Z"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000013",
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "title": "Simulate Warehouse Stock & Order Dispatch",
+      "description": "Attempt inventory reservation and trigger dispatch pipeline.",
+      "assigned_agent": "Execution Agent",
+      "status": "failed",
+      "priority": "HIGH",
+      "task_order": 3,
+      "created_at": "2026-10-07T06:55:07.423Z",
+      "updated_at": "2026-10-07T07:28:28.851Z"
+    },
+    {
+      "id": "00000000-0000-0000-0000-000000000014",
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "title": "Telemetry & SLA Breach Watcher",
+      "description": "Monitor dispatch response latency and detect unexpected exceptions.",
+      "assigned_agent": "Monitoring Agent",
+      "status": "failed",
+      "priority": "MEDIUM",
+      "task_order": 4,
+      "created_at": "2026-10-07T07:03:27.423Z",
+      "updated_at": "2026-10-07T07:31:05.923Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "title": "[RECOVERY] Simulate Warehouse Stock & Order Dispatch",
+      "description": "Recovery task: Attempt inventory reservation and trigger dispatch pipeline. - Reassigned from Execution Agent to Manager Agent after failure.",
+      "assigned_agent": "Manager Agent",
+      "priority": "HIGH",
+      "status": "in_progress",
+      "dependencies": "[]",
+      "requires_approval": true,
+      "estimated_duration": 45,
+      "created_at": "2026-10-07T07:28:31.641Z",
+      "updated_at": "2026-10-07T07:31:04.966Z",
+      "id": "2dca7ba1-e452-4ad1-b6e3-a7bba592b1b2"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "title": "Manager Review and Oversight",
+      "description": "Manager to review recovery progress and ensure successful completion",
+      "assigned_agent": "Manager Agent",
+      "priority": "HIGH",
+      "status": "in_progress",
+      "dependencies": "[]",
+      "requires_approval": false,
+      "estimated_duration": 20,
+      "created_at": "2026-10-07T07:28:31.641Z",
+      "updated_at": "2026-10-07T07:31:05.141Z",
+      "id": "cde66535-3bd1-4b63-827d-d17f95d96ddc"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "title": "[RECOVERY] Telemetry & SLA Breach Watcher",
+      "description": "Recovery task: Monitor dispatch response latency and detect unexpected exceptions. - Reassigned from Monitoring Agent to Manager Agent after failure.",
+      "assigned_agent": "Manager Agent",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "dependencies": "[]",
+      "requires_approval": true,
+      "estimated_duration": 45,
+      "created_at": "2026-10-07T07:31:17.023Z",
+      "updated_at": "2026-10-07T07:31:17.023Z",
+      "id": "37c6ef90-cefd-41b8-8dc0-45ae510a13fb"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "title": "Manager Review and Oversight",
+      "description": "Manager to review recovery progress and ensure successful completion",
+      "assigned_agent": "Manager Agent",
+      "priority": "HIGH",
+      "status": "pending",
+      "dependencies": "[]",
+      "requires_approval": false,
+      "estimated_duration": 20,
+      "created_at": "2026-10-07T07:31:17.023Z",
+      "updated_at": "2026-10-07T07:31:17.023Z",
+      "id": "d90e6503-69bd-4b84-a6dd-38bb0ebda928"
+    }
+  ],
+  "agent_logs": [
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Execution Agent",
+      "action": "TASK FAILED: Simulate Warehouse Stock & Order Dispatch",
+      "status": "failed",
+      "summary": "⚠️ CRITICAL: Task \"Simulate Warehouse Stock & Order Dispatch\" has failed. Agent Execution Agent reported an error.",
+      "confidence": 0,
+      "timestamp": "2026-10-07T07:28:28.854Z",
+      "id": "c09c631a-634e-4308-a9e8-80b84b2cfda6",
+      "created_at": "2026-10-07T07:28:28.942Z",
+      "updated_at": "2026-10-07T07:28:28.942Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Monitoring Agent",
+      "action": "⚠ FAILURE DETECTED",
+      "status": "warning",
+      "summary": "Critical failure detected in task \"Simulate Warehouse Stock & Order Dispatch\". Alerting Orchestrator immediately.",
+      "confidence": 0.99,
+      "timestamp": "2026-10-07T07:28:29.320Z",
+      "id": "4c50baf2-861b-490c-b7ba-9ce51ffb9142",
+      "created_at": "2026-10-07T07:28:29.433Z",
+      "updated_at": "2026-10-07T07:28:29.433Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Orchestrator",
+      "action": "Failure received - initiating replanning",
+      "status": "active",
+      "summary": "Orchestrator received failure alert. Activating Replanning Agent for task: \"Simulate Warehouse Stock & Order Dispatch\"",
+      "confidence": 0.97,
+      "timestamp": "2026-10-07T07:28:29.548Z",
+      "id": "738ecc55-d0f1-431a-9178-313fe47d0e1c",
+      "created_at": "2026-10-07T07:28:30.040Z",
+      "updated_at": "2026-10-07T07:28:30.040Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Replanning Agent",
+      "action": "Analyzing failure: Simulate Warehouse Stock & Order Dispatch",
+      "status": "active",
+      "summary": "Task \"Simulate Warehouse Stock & Order Dispatch\" assigned to Execution Agent has failed. Generating alternative plan.",
+      "confidence": 0.91,
+      "timestamp": "2026-10-07T07:28:30.243Z",
+      "id": "89744bd4-d404-4bd9-bc29-ab1dde804a49",
+      "created_at": "2026-10-07T07:28:30.566Z",
+      "updated_at": "2026-10-07T07:28:30.566Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Replanning Agent",
+      "action": "Recovery plan generated",
+      "status": "completed",
+      "summary": "New recovery plan: Reassign to Manager Agent with manager oversight. Deploying 2 recovery tasks.",
+      "confidence": 0.89,
+      "timestamp": "2026-10-07T07:28:31.521Z",
+      "id": "08b7a8a9-072f-4e91-aa63-faab7567b262",
+      "created_at": "2026-10-07T07:28:31.639Z",
+      "updated_at": "2026-10-07T07:28:31.639Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Orchestrator",
+      "action": "Human approval requested",
+      "status": "active",
+      "summary": "Recovery plan requires human authorization. Approval request created.",
+      "confidence": 0.95,
+      "timestamp": "2026-10-07T07:28:31.885Z",
+      "id": "59942972-26eb-46ef-a88a-52533ebd2e39",
+      "created_at": "2026-10-07T07:28:31.974Z",
+      "updated_at": "2026-10-07T07:28:31.974Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Orchestrator",
+      "action": "Workflow recovery in progress",
+      "status": "active",
+      "summary": "Recovery plan deployed. Workflow resuming execution with 2 new tasks.",
+      "confidence": 0.94,
+      "timestamp": "2026-10-07T07:28:32.202Z",
+      "id": "45eff69c-8bec-483a-a433-00c54da771f6",
+      "created_at": "2026-10-07T07:28:32.289Z",
+      "updated_at": "2026-10-07T07:28:32.289Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Orchestrator",
+      "action": "Initiating workflow execution",
+      "status": "active",
+      "summary": "Starting execution pipeline. Delegating tasks to specialized agents.",
+      "confidence": 0.95,
+      "timestamp": "2026-10-07T07:31:04.669Z",
+      "id": "7e5510d9-eefd-47e7-8ae5-aeb50dd20c98",
+      "created_at": "2026-10-07T07:31:04.768Z",
+      "updated_at": "2026-10-07T07:31:04.768Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Manager Agent",
+      "action": "Executing: [RECOVERY] Simulate Warehouse Stock & Order Dispatch",
+      "status": "active",
+      "summary": "Manager Agent is now processing: Recovery task: Attempt inventory reservation and trigger dispatch pipeline. - Reassigned from Execut",
+      "confidence": 0.87,
+      "timestamp": "2026-10-07T07:31:04.968Z",
+      "id": "eb80ce5e-450b-4151-a607-70a1673e48de",
+      "created_at": "2026-10-07T07:31:05.058Z",
+      "updated_at": "2026-10-07T07:31:05.058Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Manager Agent",
+      "action": "Executing: Manager Review and Oversight",
+      "status": "active",
+      "summary": "Manager Agent is now processing: Manager to review recovery progress and ensure successful completion",
+      "confidence": 0.87,
+      "timestamp": "2026-10-07T07:31:05.143Z",
+      "id": "426f60e6-ebbe-4efa-84f5-998034498396",
+      "created_at": "2026-10-07T07:31:05.220Z",
+      "updated_at": "2026-10-07T07:31:05.220Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Orchestrator",
+      "action": "Execution phase active",
+      "status": "active",
+      "summary": "2 tasks now in execution. Monitoring Agent activated.",
+      "confidence": 0.94,
+      "timestamp": "2026-10-07T07:31:05.222Z",
+      "id": "529cfcea-346a-4452-bec8-f8d624c277c9",
+      "created_at": "2026-10-07T07:31:05.303Z",
+      "updated_at": "2026-10-07T07:31:05.303Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Monitoring Agent",
+      "action": "Monitoring activated",
+      "status": "active",
+      "summary": "Real-time monitoring of all task progress, SLA compliance, and agent health",
+      "confidence": 0.96,
+      "timestamp": "2026-10-07T07:31:05.456Z",
+      "id": "a4ecd0a0-676e-4593-852e-4325e779b5e3",
+      "created_at": "2026-10-07T07:31:05.530Z",
+      "updated_at": "2026-10-07T07:31:05.530Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Monitoring Agent",
+      "action": "TASK FAILED: Telemetry & SLA Breach Watcher",
+      "status": "failed",
+      "summary": "⚠️ CRITICAL: Task \"Telemetry & SLA Breach Watcher\" has failed. Agent Monitoring Agent reported an error.",
+      "confidence": 0,
+      "timestamp": "2026-10-07T07:31:05.925Z",
+      "id": "35b32cea-4177-4812-bc5f-2102750971a0",
+      "created_at": "2026-10-07T07:31:05.999Z",
+      "updated_at": "2026-10-07T07:31:05.999Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Monitoring Agent",
+      "action": "⚠ FAILURE DETECTED",
+      "status": "warning",
+      "summary": "Critical failure detected in task \"Telemetry & SLA Breach Watcher\". Alerting Orchestrator immediately.",
+      "confidence": 0.99,
+      "timestamp": "2026-10-07T07:31:06.178Z",
+      "id": "80917a01-db70-4a20-8ff4-f653980fc183",
+      "created_at": "2026-10-07T07:31:06.268Z",
+      "updated_at": "2026-10-07T07:31:06.268Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Orchestrator",
+      "action": "Failure received - initiating replanning",
+      "status": "active",
+      "summary": "Orchestrator received failure alert. Activating Replanning Agent for task: \"Telemetry & SLA Breach Watcher\"",
+      "confidence": 0.97,
+      "timestamp": "2026-10-07T07:31:06.269Z",
+      "id": "5245e059-ca1d-4ebf-a5d6-eb8d1971d9a2",
+      "created_at": "2026-10-07T07:31:06.358Z",
+      "updated_at": "2026-10-07T07:31:06.358Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Replanning Agent",
+      "action": "Analyzing failure: Telemetry & SLA Breach Watcher",
+      "status": "active",
+      "summary": "Task \"Telemetry & SLA Breach Watcher\" assigned to Monitoring Agent has failed. Generating alternative plan.",
+      "confidence": 0.91,
+      "timestamp": "2026-10-07T07:31:06.452Z",
+      "id": "6f6b44ee-20cd-4a11-81a5-d8bf29caa50a",
+      "created_at": "2026-10-07T07:31:06.530Z",
+      "updated_at": "2026-10-07T07:31:06.530Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Replanning Agent",
+      "action": "Recovery plan generated",
+      "status": "completed",
+      "summary": "New recovery plan: Reassign to Manager Agent with manager oversight. Deploying 2 recovery tasks.",
+      "confidence": 0.89,
+      "timestamp": "2026-10-07T07:31:16.538Z",
+      "id": "142a9a59-d49b-41e6-a933-01d5abf018d9",
+      "created_at": "2026-10-07T07:31:17.021Z",
+      "updated_at": "2026-10-07T07:31:17.021Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Orchestrator",
+      "action": "Human approval requested",
+      "status": "active",
+      "summary": "Recovery plan requires human authorization. Approval request created.",
+      "confidence": 0.95,
+      "timestamp": "2026-10-07T07:31:17.220Z",
+      "id": "6957b2c3-a413-4b59-af27-4111cb0be61e",
+      "created_at": "2026-10-07T07:31:17.303Z",
+      "updated_at": "2026-10-07T07:31:17.303Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "agent_name": "Orchestrator",
+      "action": "Workflow recovery in progress",
+      "status": "active",
+      "summary": "Recovery plan deployed. Workflow resuming execution with 2 new tasks.",
+      "confidence": 0.94,
+      "timestamp": "2026-10-07T07:31:17.489Z",
+      "id": "cac6c577-837d-4054-a7ef-bc105367b4c1",
+      "created_at": "2026-10-07T07:31:17.594Z",
+      "updated_at": "2026-10-07T07:31:17.594Z"
+    }
+  ],
+  "workflow_events": [
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "event_type": "TASK_FAILED",
+      "actor_type": "System",
+      "actor_name": "Execution Agent",
+      "message": "Task \"Simulate Warehouse Stock & Order Dispatch\" failed. Triggering monitoring and replanning pipeline.",
+      "metadata": {
+        "taskId": "00000000-0000-0000-0000-000000000013",
+        "assignedAgent": "Execution Agent"
+      },
+      "created_at": "2026-10-07T07:28:29.075Z",
+      "id": "a508fa89-dd70-4b9d-bfe4-773698c05da8",
+      "updated_at": "2026-10-07T07:28:29.156Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "event_type": "REPLAN_COMPLETE",
+      "actor_type": "Replanning Agent",
+      "actor_name": "System",
+      "message": "Replanning complete. 2 recovery tasks assigned. Status: Awaiting approval",
+      "metadata": {
+        "replan": {
+          "reason": "Execution Agent was unable to complete task \"Simulate Warehouse Stock & Order Dispatch\". Reassigning to Manager Agent and adding manager oversight.",
+          "failedTask": "Simulate Warehouse Stock & Order Dispatch",
+          "failureAnalysis": "Agent failure - original agent unavailable or unable to complete task",
+          "recoveryStrategy": "Reassign to Manager Agent with manager oversight",
+          "newPlan": [
+            {
+              "title": "[RECOVERY] Simulate Warehouse Stock & Order Dispatch",
+              "description": "Recovery task: Attempt inventory reservation and trigger dispatch pipeline. - Reassigned from Execution Agent to Manager Agent after failure.",
+              "priority": "HIGH",
+              "assignedAgent": "Manager Agent",
+              "isReplacement": true,
+              "replaces": "Simulate Warehouse Stock & Order Dispatch",
+              "estimatedDuration": 45,
+              "requiresApproval": true,
+              "approvalReason": "Recovery task requires manager approval due to prior failure"
+            },
+            {
+              "title": "Manager Review and Oversight",
+              "description": "Manager to review recovery progress and ensure successful completion",
+              "priority": "HIGH",
+              "assignedAgent": "Manager Agent",
+              "isReplacement": false,
+              "replaces": "",
+              "estimatedDuration": 20,
+              "requiresApproval": false,
+              "approvalReason": ""
+            }
+          ],
+          "escalationRequired": false,
+          "escalationReason": "",
+          "requiresHumanApproval": true,
+          "humanApprovalReason": "Recovery from task failure requires human oversight",
+          "riskAssessment": "Moderate risk - backup agent assigned, additional verification added",
+          "preventionRecommendations": [
+            "Implement agent health checks",
+            "Add task retry logic"
+          ]
+        },
+        "recoveryTaskCount": 2
+      },
+      "created_at": "2026-10-07T07:28:32.100Z",
+      "id": "8fcc6ace-8fbe-4a20-853e-0bd87f50dd27",
+      "updated_at": "2026-10-07T07:28:32.200Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "event_type": "EXECUTION_STARTED",
+      "actor_type": "Orchestrator",
+      "actor_name": "Orchestrator",
+      "message": "Workflow execution started. 2 initial tasks dispatched.",
+      "metadata": {},
+      "created_at": "2026-10-07T07:31:05.306Z",
+      "id": "85ab1136-1920-47b2-b86d-dcacd1ac93b5",
+      "updated_at": "2026-10-07T07:31:05.382Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "event_type": "TASK_FAILED",
+      "actor_type": "System",
+      "actor_name": "Monitoring Agent",
+      "message": "Task \"Telemetry & SLA Breach Watcher\" failed. Triggering monitoring and replanning pipeline.",
+      "metadata": {
+        "taskId": "00000000-0000-0000-0000-000000000014",
+        "assignedAgent": "Monitoring Agent"
+      },
+      "created_at": "2026-10-07T07:31:06.029Z",
+      "id": "97b8a110-f7ca-4e0c-8556-75a6250c75b0",
+      "updated_at": "2026-10-07T07:31:06.102Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "event_type": "REPLAN_COMPLETE",
+      "actor_type": "Replanning Agent",
+      "actor_name": "System",
+      "message": "Replanning complete. 2 recovery tasks assigned. Status: Awaiting approval",
+      "metadata": {
+        "replan": {
+          "reason": "Monitoring Agent was unable to complete task \"Telemetry & SLA Breach Watcher\". Reassigning to Manager Agent and adding manager oversight.",
+          "failedTask": "Telemetry & SLA Breach Watcher",
+          "failureAnalysis": "Agent failure - original agent unavailable or unable to complete task",
+          "recoveryStrategy": "Reassign to Manager Agent with manager oversight",
+          "newPlan": [
+            {
+              "title": "[RECOVERY] Telemetry & SLA Breach Watcher",
+              "description": "Recovery task: Monitor dispatch response latency and detect unexpected exceptions. - Reassigned from Monitoring Agent to Manager Agent after failure.",
+              "priority": "MEDIUM",
+              "assignedAgent": "Manager Agent",
+              "isReplacement": true,
+              "replaces": "Telemetry & SLA Breach Watcher",
+              "estimatedDuration": 45,
+              "requiresApproval": true,
+              "approvalReason": "Recovery task requires manager approval due to prior failure"
+            },
+            {
+              "title": "Manager Review and Oversight",
+              "description": "Manager to review recovery progress and ensure successful completion",
+              "priority": "HIGH",
+              "assignedAgent": "Manager Agent",
+              "isReplacement": false,
+              "replaces": "",
+              "estimatedDuration": 20,
+              "requiresApproval": false,
+              "approvalReason": ""
+            }
+          ],
+          "escalationRequired": false,
+          "escalationReason": "",
+          "requiresHumanApproval": true,
+          "humanApprovalReason": "Recovery from task failure requires human oversight",
+          "riskAssessment": "Moderate risk - backup agent assigned, additional verification added",
+          "preventionRecommendations": [
+            "Implement agent health checks",
+            "Add task retry logic"
+          ]
+        },
+        "recoveryTaskCount": 2
+      },
+      "created_at": "2026-10-07T07:31:17.396Z",
+      "id": "1fbb812f-eb33-4138-b11a-765327b77324",
+      "updated_at": "2026-10-07T07:31:17.487Z"
+    },
+    {
+      "workflow_id": "71e377b4-4d39-4475-9829-4267e54a711d",
+      "event_type": "WORKFLOW_CREATED",
+      "actor_type": "User",
+      "actor_name": "Demo Administrator",
+      "message": "Workflow \"Integration Test Incident\" created by Demo Administrator",
+      "metadata": {},
+      "created_at": "2026-10-07T08:28:42.417Z",
+      "id": "5a336b7e-4c12-4eed-8a36-006022168d04",
+      "updated_at": "2026-10-07T08:28:42.488Z"
+    },
+    {
+      "workflow_id": "2db13990-3a35-455f-953f-b97e27838709",
+      "event_type": "WORKFLOW_CREATED",
+      "actor_type": "User",
+      "actor_name": "Demo Administrator",
+      "message": "Workflow \"Integration Test Incident\" created by Demo Administrator",
+      "metadata": {},
+      "created_at": "2026-10-07T08:29:41.476Z",
+      "id": "19c8e901-86a0-485e-b04f-7c02e6eb2e82",
+      "updated_at": "2026-10-07T08:29:41.575Z"
+    }
+  ],
+  "approvals": [
+    {
+      "id": "00000000-0000-0000-0000-000000000021",
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "action_type": "refund_customer",
+      "reason": "Payment was charged but downstream order record was not generated.",
+      "ai_recommendation": "Authorize customer refund ($129.00) to maintain high customer satisfaction.",
+      "status": "pending",
+      "created_at": "2026-10-07T07:11:47.423Z"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "task_id": "2dca7ba1-e452-4ad1-b6e3-a7bba592b1b2",
+      "action": "Approve recovery plan for failed task: Simulate Warehouse Stock & Order Dispatch",
+      "reason": "Recovery from task failure requires human oversight",
+      "ai_recommendation": "Recommend approval: Reassign to Manager Agent with manager oversight",
+      "risk_level": "MEDIUM",
+      "status": "pending",
+      "created_at": "2026-10-07T07:28:31.752Z",
+      "updated_at": "2026-10-07T07:28:31.752Z",
+      "id": "f9530159-bdd7-4f57-87fb-cf158f926dee"
+    },
+    {
+      "workflow_id": "00000000-0000-0000-0000-000000000002",
+      "task_id": "37c6ef90-cefd-41b8-8dc0-45ae510a13fb",
+      "action": "Approve recovery plan for failed task: Telemetry & SLA Breach Watcher",
+      "reason": "Recovery from task failure requires human oversight",
+      "ai_recommendation": "Recommend approval: Reassign to Manager Agent with manager oversight",
+      "risk_level": "MEDIUM",
+      "status": "pending",
+      "created_at": "2026-10-07T07:31:17.127Z",
+      "updated_at": "2026-10-07T07:31:17.127Z",
+      "id": "5c001ed3-c3ff-405a-8bcd-a62490deb4b3"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "00000000-0000-0000-0000-000000000001",
+      "name": "Demo Administrator",
+      "email": "demo@workflowx.ai",
+      "password_hash": "$2a$10$YWNYUUkhWpiPFyNy5l9l4OhMcnTx/AMD/hZ6KAT1ecMOZ8k4v9QYu",
+      "role": "admin",
+      "created_at": "2026-10-07T07:28:27.421Z",
+      "updated_at": "2026-10-07T07:28:27.423Z"
+    },
+    {
+      "name": "Judge Tester",
+      "email": "judge_1791361721618@workflowx.ai",
+      "password_hash": "$2a$12$49t7RLK1d1WnPG5WyMvr5eHtsrwgvB4bEQF8KsT7dx5vbwdGu4btG",
+      "role": "user",
+      "id": "9610fea3-cb82-40e8-b454-803009d231bf",
+      "created_at": "2026-10-07T08:28:42.241Z",
+      "updated_at": "2026-10-07T08:28:42.241Z"
+    },
+    {
+      "name": "Judge Tester",
+      "email": "judge_1791361780589@workflowx.ai",
+      "password_hash": "$2a$12$oJYZT9SnJisBd3sVaUYmvem0APNu5SSXe2CvntRtuiakQatEwdpGG",
+      "role": "user",
+      "id": "d97da7b5-a20e-48e4-8531-6ed43da39f42",
+      "created_at": "2026-10-07T08:29:41.263Z",
+      "updated_at": "2026-10-07T08:29:41.263Z"
+    },
+    {
+      "name": "Moneky D Luffy",
+      "email": "monekydl03@gmail.com",
+      "password_hash": "$2a$12$ndZKaDPDOGvWv7lSiQV9Re0TMtohkfGOJ7ZvrGmIhj7xCz8x255Gq",
+      "role": "user",
+      "id": "3203beab-e85a-4553-a351-e14273b79d1a",
+      "created_at": "2026-10-07T08:53:50.429Z",
+      "updated_at": "2026-10-07T08:53:50.429Z"
+    },
+    {
+      "name": "Bhargav Ambati",
+      "email": "bhargavambati09@gmail.com",
+      "password_hash": "$2a$12$TPAobyzjvE7bs6gWjDKSCe4J/fNqysz0ZOx8tkDYlS9L7wOnYtg7u",
+      "role": "user",
+      "id": "dafc7352-4789-47f5-87a9-9275d527f8c9",
+      "created_at": "2026-10-07T08:55:59.022Z",
+      "updated_at": "2026-10-07T08:55:59.022Z"
+    }
+  ]
+}

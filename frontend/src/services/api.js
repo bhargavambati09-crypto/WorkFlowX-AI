@@ -1,0 +1,168 @@
+import axios from 'axios';
+import { DEMO_WORKFLOW, DEMO_STATS } from './mockData';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+const api = axios.create({
+  baseURL: `${API_URL}/api`,
+  headers: { 'Content-Type': 'application/json' },
+  timeout: 60000,
+});
+
+// Request interceptor - add auth token
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor - handle common errors and offline/cloud preview fallback
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    // Graceful fallback for network disconnection or standalone static previews
+    if (!error.response && error.config) {
+      const url = error.config.url || '';
+      if (url.includes('/auth/login')) {
+        return Promise.resolve({
+          data: {
+            message: 'Signed in successfully (Demo Session)',
+            token: 'demo-jwt-preview-token',
+            user: { id: '00000000-0000-0000-0000-000000000001', name: 'Demo Administrator', email: 'demo@workflowx.ai', role: 'admin' },
+          }
+        });
+      }
+      if (url.includes('/auth/register')) {
+        return Promise.resolve({
+          data: {
+            message: 'Registered successfully',
+            token: 'demo-jwt-preview-token',
+            user: { id: '00000000-0000-0000-0000-000000000001', name: 'Operator', email: 'operator@workflowx.ai', role: 'user' },
+          }
+        });
+      }
+      if (url.includes('/auth/me')) {
+        const saved = localStorage.getItem('user');
+        return Promise.resolve({
+          data: {
+            user: saved ? JSON.parse(saved) : { id: '00000000-0000-0000-0000-000000000001', name: 'Demo Administrator', email: 'demo@workflowx.ai', role: 'admin' },
+          }
+        });
+      }
+      if (url.includes('/analytics/dashboard')) {
+        return Promise.resolve({
+          data: {
+            stats: DEMO_STATS,
+            recentWorkflows: [DEMO_WORKFLOW],
+            recentAgentActivity: DEMO_WORKFLOW.logs,
+          }
+        });
+      }
+      if (url.includes('/workflows')) {
+        if (url.includes('/simulate-failure')) {
+          const sim = {
+            ...DEMO_WORKFLOW,
+            status: 'replanning',
+            health_score: 65,
+            tasks: DEMO_WORKFLOW.tasks.map((t, idx) => idx === 2 ? { ...t, status: 'failed' } : t),
+          };
+          return Promise.resolve({ data: { message: 'Failure simulated', workflow: sim } });
+        }
+        if (url.includes('/replan')) {
+          const replanned = {
+            ...DEMO_WORKFLOW,
+            status: 'executing',
+            health_score: 88,
+            tasks: DEMO_WORKFLOW.tasks.map(t => t.status === 'failed' ? { ...t, status: 'in_progress', assigned_agent: 'Manager Agent' } : t),
+          };
+          return Promise.resolve({ data: { message: 'Replanned', workflow: replanned } });
+        }
+        if (url.includes('/ask')) {
+          return Promise.resolve({
+            data: {
+              answer: 'Based on current multi-agent execution telemetry, the workflow encountered a payment reconciliation delay which was autonomously reassigned to the Manager Agent. All dependencies are healthy and SLA compliance is on track.',
+            }
+          });
+        }
+        return Promise.resolve({
+          data: {
+            workflows: [DEMO_WORKFLOW],
+            workflow: DEMO_WORKFLOW,
+            agents: DEMO_WORKFLOW.logs.map(l => ({ name: l.agent_name, status: l.status })),
+            events: DEMO_WORKFLOW.logs,
+          }
+        });
+      }
+      if (url.includes('/tasks')) {
+        return Promise.resolve({ data: { tasks: DEMO_WORKFLOW.tasks } });
+      }
+      if (url.includes('/approvals')) {
+        return Promise.resolve({ data: { approvals: DEMO_WORKFLOW.approvals } });
+      }
+    }
+
+    if (error.response?.status === 401) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      if (
+        typeof window !== 'undefined' &&
+        !window.location.pathname.includes('/login') &&
+        !window.location.pathname.includes('/register') &&
+        window.location.pathname !== '/'
+      ) {
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+// Auth
+export const authAPI = {
+  register: (data) => api.post('/auth/register', data),
+  login: (data) => api.post('/auth/login', data),
+  me: () => api.get('/auth/me'),
+};
+
+// Workflows
+export const workflowAPI = {
+  getAll: (params) => api.get('/workflows', { params }),
+  create: (data) => api.post('/workflows', data),
+  getById: (id) => api.get(`/workflows/${id}`),
+  update: (id, data) => api.put(`/workflows/${id}`, data),
+  delete: (id) => api.delete(`/workflows/${id}`),
+  analyze: (id) => api.post(`/workflows/${id}/analyze`),
+  start: (id) => api.post(`/workflows/${id}/start`),
+  simulateFailure: (id) => api.post(`/workflows/${id}/simulate-failure`),
+  replan: (id) => api.post(`/workflows/${id}/replan`),
+  complete: (id) => api.post(`/workflows/${id}/complete`),
+  getAgents: (id) => api.get(`/workflows/${id}/agents`),
+  getEvents: (id) => api.get(`/workflows/${id}/events`),
+  getHealth: (id) => api.get(`/workflows/${id}/health`),
+  ask: (id, question) => api.post(`/workflows/${id}/ask`, { question }),
+  createDemo: () => api.post('/workflows/demo'),
+};
+
+// Tasks
+export const taskAPI = {
+  getAll: (params) => api.get('/tasks', { params }),
+  getById: (id) => api.get(`/tasks/${id}`),
+  update: (id, data) => api.put(`/tasks/${id}`, data),
+};
+
+// Approvals
+export const approvalAPI = {
+  getAll: (params) => api.get('/approvals', { params }),
+  approve: (id) => api.post(`/approvals/${id}/approve`),
+  reject: (id, data) => api.post(`/approvals/${id}/reject`, data),
+};
+
+// Analytics
+export const analyticsAPI = {
+  getDashboard: () => api.get('/analytics/dashboard'),
+};
+
+export default api;
