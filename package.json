@@ -1,0 +1,32 @@
+{
+  "name": "workflowx-ai-root",
+  "version": "1.0.0",
+  "description": "WorkFlowX AI - Full-Stack Autonomous Multi-Agent Workflow Intelligence Monorepo",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "start:backend": "npm --prefix backend start",
+    "build:frontend": "npm --prefix frontend run build",
+    "build": "npm --prefix frontend run build",
+    "test": "npm --prefix backend test",
+    "test:backend": "npm --prefix backend test",
+    "migrate": "node backend/node_modules/@supabase/supabase-js/package.json 2>/dev/null; node supabase/migrate.js"
+  },
+  "keywords": [
+    "multi-agent",
+    "workflow-intelligence",
+    "autonomous-agents",
+    "orchestrator",
+    "react",
+    "express",
+    "supabase",
+    "gemini"
+  ],
+  "author": "WorkFlowX AI Team",
+  "license": "MIT"
+}
