@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { toast } from '../components/ui/Toast';
 import { Spinner } from '../components/ui/index.jsx';
@@ -14,7 +14,13 @@ const formatEmailToName = (email) => {
 };
 
 const RegisterPage = () => {
-  const [form, setForm] = useState({ name: '', email: '', password: '' });
+  const [searchParams] = useSearchParams();
+  const prefilledEmail = searchParams.get('email') || '';
+  const [form, setForm] = useState({
+    name: prefilledEmail ? formatEmailToName(prefilledEmail) : '',
+    email: prefilledEmail,
+    password: '',
+  });
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');

@@ -92,23 +92,6 @@ const LoginPage = () => {
     }
   };
 
-  const handleDemoLogin = async (demoEmail, demoPassword) => {
-    setError('');
-    setLoading(true);
-    setForm({ email: demoEmail, password: demoPassword });
-    try {
-      await login(demoEmail, demoPassword);
-      toast.success('Signed in with Demo session!');
-      navigate('/dashboard');
-    } catch (err) {
-      const msg = err?.response?.data?.error || 'Invalid credentials';
-      setError(msg);
-      toast.error(msg);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-dark-900 flex items-center justify-center px-4 relative">
       <div className="absolute inset-0 bg-grid opacity-30" />
@@ -123,38 +106,6 @@ const LoginPage = () => {
           </Link>
           <h1 className="font-heading text-2xl lg:text-3xl font-bold text-white tracking-tight">Welcome back</h1>
           <p className="text-gray-400 text-sm mt-1">Sign in to WorkFlowX AI</p>
-        </div>
-
-        {/* 1-Click Demo Quick Access */}
-        <div className="mb-4 p-3.5 rounded-xl bg-brand-500/10 border border-brand-500/20">
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold text-brand-300 flex items-center gap-1.5">
-              <Zap size={14} className="text-brand-400" /> Demo Quick Access
-            </span>
-            <span className="text-[10px] text-gray-400">1-click instant login</span>
-          </div>
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              type="button"
-              id="demo-admin-login-btn"
-              disabled={loading}
-              onClick={() => handleDemoLogin('demo@workflowx.ai', 'password123')}
-              className="py-2 px-2.5 rounded-lg bg-brand-500/20 hover:bg-brand-500/30 border border-brand-500/30 text-white text-xs font-medium text-left transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-            >
-              <div className="font-semibold text-brand-200">Demo Admin</div>
-              <div className="text-[10px] text-gray-400 truncate">demo@workflowx.ai</div>
-            </button>
-            <button
-              type="button"
-              id="demo-user-login-btn"
-              disabled={loading}
-              onClick={() => handleDemoLogin('bhargavambati09@gmail.com', 'password123')}
-              className="py-2 px-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-medium text-left transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
-            >
-              <div className="font-semibold text-purple-300">Test Account</div>
-              <div className="text-[10px] text-gray-400 truncate">bhargavambati09@...</div>
-            </button>
-          </div>
         </div>
 
         {/* Continue with Google Button */}
@@ -211,10 +162,16 @@ const LoginPage = () => {
           </div>
 
           {error && (
-            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium space-y-1">
+            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium space-y-1.5">
               <div>{error}</div>
-              <div className="text-[11px] text-gray-400">
-                Hint: Use the <strong>Demo Quick Access</strong> buttons above, or password: <span className="font-mono text-brand-300">password123</span>
+              <div className="text-[11px] text-gray-400 flex items-center justify-between pt-1 border-t border-red-500/15">
+                <span>Don't have an account yet?</span>
+                <Link
+                  to={`/register${form.email ? `?email=${encodeURIComponent(form.email.trim())}` : ''}`}
+                  className="text-brand-400 hover:text-brand-300 font-semibold underline underline-offset-2 ml-1"
+                >
+                  Create Account →
+                </Link>
               </div>
             </div>
           )}
