@@ -44,18 +44,23 @@ const loadStore = () => {
     approvals: [],
   };
 
-  // Ensure default demo profile exists
+  // Ensure default demo profile exists with verified 'password123' hash
+  const DEMO_PW_HASH = '$2a$10$iwg3g/aJ0lbdDQUt5RdiVOZV1zdXKLHxBoMCZKmb3CmVlFHm34AQG';
   if (!s.profiles) s.profiles = [];
-  if (!s.profiles.some(p => p.email === 'demo@workflowx.ai')) {
+  const existingDemo = s.profiles.find(p => p.email === 'demo@workflowx.ai');
+  if (!existingDemo) {
     s.profiles.push({
       id: DEMO_USER_ID,
       name: 'Demo Administrator',
       email: 'demo@workflowx.ai',
-      password_hash: '$2a$10$YWNYUUkhWpiPFyNy5l9l4OhMcnTx/AMD/hZ6KAT1ecMOZ8k4v9QYu',
+      password_hash: DEMO_PW_HASH,
       role: 'admin',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     });
+  } else {
+    // Keep hash valid
+    existingDemo.password_hash = DEMO_PW_HASH;
   }
 
   // Ensure default demo workflow exists
@@ -229,6 +234,32 @@ class LocalQueryBuilder {
     return this;
   }
 
+  range(from, to) {
+    this.rangeFrom = Number(from);
+    this.rangeTo = Number(to);
+    return this;
+  }
+
+  gte(col, val) {
+    this.filters.push((row) => row[col] >= val);
+    return this;
+  }
+
+  lte(col, val) {
+    this.filters.push((row) => row[col] <= val);
+    return this;
+  }
+
+  gt(col, val) {
+    this.filters.push((row) => row[col] > val);
+    return this;
+  }
+
+  lt(col, val) {
+    this.filters.push((row) => row[col] < val);
+    return this;
+  }
+
   single() {
     this.isSingle = true;
     return this;
@@ -293,8 +324,10 @@ class LocalQueryBuilder {
       });
     }
 
-    // Limit
-    if (this.limitCount !== null) {
+    // Limit & Range
+    if (this.rangeFrom !== undefined && this.rangeTo !== undefined) {
+      rows = rows.slice(this.rangeFrom, this.rangeTo + 1);
+    } else if (this.limitCount !== null) {
       rows = rows.slice(0, this.limitCount);
     }
 
@@ -312,14 +345,19 @@ class LocalQueryBuilder {
 
 /**
  * Resilient Supabase Client Wrapper
- * Tries cloud Supabase first. If table is not yet in schema cache (PGRST205),
- * transparently switches to the local store so the app is immediately operable.
+ * Tries cloud Supabase first. If table is not yet in schema cache (PGRST205 / 42P01) or network fails,
+ * transparently switches to the local store and remembers it so subsequent queries are instant.
  */
 let hasLoggedFallback = false;
+const fallbackTables = new Set();
 
 const supabase = {
   ...realSupabase,
   from(table) {
+    if (fallbackTables.has(table)) {
+      return new LocalQueryBuilder(table);
+    }
+
     const recordedCalls = [];
     const createProxy = (target) => {
       return new Proxy(target, {
@@ -327,7 +365,8 @@ const supabase = {
           if (prop === 'then') {
             return function (onFulfilled, onRejected) {
               return t.then((result) => {
-                if (result && result.error && (result.error.code === 'PGRST205' || result.error.code === '42P01')) {
+                if (result && result.error && (result.error.code === 'PGRST205' || result.error.code === '42P01' || result.error.message?.includes('relation') || result.error.message?.includes('schema cache'))) {
+                  fallbackTables.add(table);
                   if (!hasLoggedFallback) {
                     console.log(`[Supabase Notice] Cloud table '${table}' not found in schema cache. Using resilient local storage.`);
                     hasLoggedFallback = true;
@@ -342,6 +381,11 @@ const supabase = {
                 }
                 return onFulfilled ? onFulfilled(result) : result;
               }).catch((err) => {
+                fallbackTables.add(table);
+                if (!hasLoggedFallback) {
+                  console.log(`[Supabase Notice] Cloud connection for '${table}' failed (${err?.message || 'offline'}). Using resilient local storage.`);
+                  hasLoggedFallback = true;
+                }
                 const local = new LocalQueryBuilder(table);
                 for (const call of recordedCalls) {
                   if (typeof local[call.method] === 'function') {
@@ -360,6 +404,7 @@ const supabase = {
                 const nextTarget = t[prop](...args);
                 return createProxy(nextTarget);
               } catch (err) {
+                fallbackTables.add(table);
                 return createProxy({
                   then(onF, onR) {
                     const local = new LocalQueryBuilder(table);

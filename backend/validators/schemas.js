@@ -43,6 +43,7 @@ const taskUpdateSchema = z.object({
 
 const approvalSchema = z.object({
   notes: z.string().optional(),
+  reason: z.string().optional(),
 });
 
 const uuidSchema = z.string().uuid('Invalid ID format');

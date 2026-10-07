@@ -1,3 +1,5 @@
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '.env') });
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -74,6 +76,15 @@ app.use('*', (req, res) => {
 
 // Centralized error handler
 app.use(errorHandler);
+
+// Robust process-level error safety to prevent unexpected server terminations
+process.on('unhandledRejection', (reason) => {
+  console.error('[Unhandled Rejection Caught]:', reason?.message || reason);
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('[Uncaught Exception Caught]:', err?.message || err);
+});
 
 app.listen(PORT, () => {
   console.log(`

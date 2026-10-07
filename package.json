@@ -15,7 +15,7 @@
     "build": "npm --prefix frontend run build",
     "test": "npm --prefix backend test",
     "test:backend": "npm --prefix backend test",
-    "migrate": "node backend/node_modules/@supabase/supabase-js/package.json 2>/dev/null; node supabase/migrate.js"
+    "migrate": "node supabase/migrate.js"
   },
   "keywords": [
     "multi-agent",

@@ -33,9 +33,16 @@ const getTasks = async (req, res, next) => {
 // GET /api/tasks/:id
 const getTask = async (req, res, next) => {
   try {
+    // Fetch user's workflow IDs first to enforce ownership (prevent IDOR)
+    const { data: userWorkflows } = await supabase.from('workflows').select('id')
+      .eq('created_by', req.user.id);
+    const wfIds = (userWorkflows || []).map(w => w.id);
+
     const { data, error } = await supabase.from('tasks')
       .select('*')
-      .eq('id', req.params.id).single();
+      .eq('id', req.params.id)
+      .in('workflow_id', wfIds.length ? wfIds : [''])
+      .single();
 
     if (error || !data) {
       return res.status(404).json({ error: 'Task not found' });
@@ -49,9 +56,16 @@ const updateTask = async (req, res, next) => {
   try {
     const updates = taskUpdateSchema.parse(req.body);
 
+    // Enforce ownership: only fetch task if it belongs to the user's workflow (prevents IDOR)
+    const { data: userWorkflows } = await supabase.from('workflows').select('id')
+      .eq('created_by', req.user.id);
+    const wfIds = (userWorkflows || []).map(w => w.id);
+
     const { data: existing } = await supabase.from('tasks')
       .select('*')
-      .eq('id', req.params.id).single();
+      .eq('id', req.params.id)
+      .in('workflow_id', wfIds.length ? wfIds : [''])
+      .single();
 
     if (!existing) {
       return res.status(404).json({ error: 'Task not found' });

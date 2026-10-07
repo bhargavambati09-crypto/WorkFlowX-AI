@@ -48,7 +48,7 @@ const getWorkflow = async (req, res, next) => {
     if (error || !workflow) return res.status(404).json({ error: 'Workflow not found' });
 
     const { data: tasks } = await supabase.from('tasks').select('*')
-      .eq('workflow_id', req.params.id).order('task_order', { ascending: true });
+      .eq('workflow_id', req.params.id).order('created_at', { ascending: true });
     const { data: logs } = await supabase.from('agent_logs').select('*')
       .eq('workflow_id', req.params.id).order('timestamp', { ascending: false });
     const { data: approvals } = await supabase.from('approvals').select('*')

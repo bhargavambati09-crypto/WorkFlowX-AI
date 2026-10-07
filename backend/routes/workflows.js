@@ -19,7 +19,9 @@ router.delete('/:id', deleteWorkflow);
 
 // AI routes
 router.post('/:id/analyze', analyzeWorkflow);
+router.post('/:id/plan', analyzeWorkflow);
 router.post('/:id/start', startWorkflow);
+router.post('/:id/execute', startWorkflow);
 router.post('/:id/simulate-failure', simulateFailure);
 router.post('/:id/replan', replanWorkflow);
 router.post('/:id/complete', completeWorkflow);

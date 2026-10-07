@@ -8,9 +8,16 @@
 const path = require('path');
 const fs = require('fs');
 
+// Ensure module resolution finds backend/node_modules if running from workspace root
+const backendModules = path.join(__dirname, '../backend/node_modules');
+if (fs.existsSync(backendModules) && !module.paths.includes(backendModules)) {
+  module.paths.unshift(backendModules);
+}
+
 const envPath = fs.existsSync(path.join(__dirname, '../backend/.env'))
   ? path.join(__dirname, '../backend/.env')
   : path.join(__dirname, '../.env');
+
 require('dotenv').config({ path: envPath });
 const { createClient } = require('@supabase/supabase-js');
 
@@ -47,43 +54,37 @@ async function runMigration() {
       .map(s => s.trim())
       .filter(s => s.length > 0 && !s.startsWith('--'));
 
-    let successCount = 0;
-    let errorCount = 0;
+    let processedCount = 0;
 
     for (const statement of statements) {
       try {
-        const { error } = await supabase.rpc('exec_sql', { sql: statement }).catch(() => ({ error: null }));
-        
-        // Alternative: use the REST API directly  
-        const response = await fetch(`${supabaseUrl}/rest/v1/rpc/`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'apikey': serviceRoleKey,
-            'Authorization': `Bearer ${serviceRoleKey}`,
-          },
-        }).catch(() => null);
-        
-        successCount++;
-      } catch (err) {
-        // Non-critical errors (like "already exists") are expected
-        if (!err.message?.includes('already exists') && !err.message?.includes('does not exist')) {
-          console.error(`  ⚠️ Statement error: ${err.message}`);
-          errorCount++;
-        }
+        await supabase.rpc('exec_sql', { sql: statement });
+        processedCount++;
+      } catch {
+        // PostgREST doesn't expose raw exec_sql by default without SQL function
       }
     }
 
-    console.log(`  ✅ Migration ${file}: ${successCount} statements processed`);
-    if (errorCount > 0) console.log(`  ⚠️ ${errorCount} warnings (may be safe to ignore)`);
+    console.log(`  📄 Read ${statements.length} SQL statements from ${file}`);
   }
 
-  console.log('\n🎉 Migration complete!');
-  console.log('\n📋 MANUAL SETUP REQUIRED:');
-  console.log('   Go to: https://supabase.com/dashboard/project/keltslawwyvtruftqmnp');
-  console.log('   Navigate to: SQL Editor');
-  console.log('   Copy and paste the contents of: supabase/migrations/001_initial_schema.sql');
-  console.log('   Click: Run');
+  // Test current table connectivity
+  console.log('\n🔍 Verifying Supabase cloud table status...');
+  const { data: profiles, error: pErr } = await supabase.from('profiles').select('count', { count: 'exact', head: true });
+  if (pErr) {
+    console.log(`  ⚠️ Notice: Tables need to be initialized in Supabase SQL editor:`);
+    console.log(`     Error: ${pErr.message}`);
+    console.log('\n📋 ONE-CLICK CLOUD SETUP:');
+    console.log('   1. Go to: https://supabase.com/dashboard/project/keltslawwyvtruftqmnp');
+    console.log('   2. Navigate to: SQL Editor (left sidebar)');
+    console.log('   3. Paste the contents of: supabase/migrations/001_initial_schema.sql');
+    console.log('   4. Click: Run (Green button)');
+    console.log('   (Note: WorkFlowX AI automatically uses its resilient zero-downtime store until run!)');
+  } else {
+    console.log(`  ✅ Supabase cloud tables are online and accessible!`);
+  }
+
+  console.log('\n🎉 Migration inspection complete!');
 }
 
 runMigration().catch(console.error);

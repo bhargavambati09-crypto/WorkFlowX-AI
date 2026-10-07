@@ -92,6 +92,23 @@ const LoginPage = () => {
     }
   };
 
+  const handleDemoLogin = async (demoEmail, demoPassword) => {
+    setError('');
+    setLoading(true);
+    setForm({ email: demoEmail, password: demoPassword });
+    try {
+      await login(demoEmail, demoPassword);
+      toast.success('Signed in with Demo session!');
+      navigate('/dashboard');
+    } catch (err) {
+      const msg = err?.response?.data?.error || 'Invalid credentials';
+      setError(msg);
+      toast.error(msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-dark-900 flex items-center justify-center px-4 relative">
       <div className="absolute inset-0 bg-grid opacity-30" />
@@ -108,13 +125,45 @@ const LoginPage = () => {
           <p className="text-gray-400 text-sm mt-1">Sign in to WorkFlowX AI</p>
         </div>
 
+        {/* 1-Click Demo Quick Access */}
+        <div className="mb-4 p-3.5 rounded-xl bg-brand-500/10 border border-brand-500/20">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-semibold text-brand-300 flex items-center gap-1.5">
+              <Zap size={14} className="text-brand-400" /> Demo Quick Access
+            </span>
+            <span className="text-[10px] text-gray-400">1-click instant login</span>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <button
+              type="button"
+              id="demo-admin-login-btn"
+              disabled={loading}
+              onClick={() => handleDemoLogin('demo@workflowx.ai', 'password123')}
+              className="py-2 px-2.5 rounded-lg bg-brand-500/20 hover:bg-brand-500/30 border border-brand-500/30 text-white text-xs font-medium text-left transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            >
+              <div className="font-semibold text-brand-200">Demo Admin</div>
+              <div className="text-[10px] text-gray-400 truncate">demo@workflowx.ai</div>
+            </button>
+            <button
+              type="button"
+              id="demo-user-login-btn"
+              disabled={loading}
+              onClick={() => handleDemoLogin('bhargavambati09@gmail.com', 'password123')}
+              className="py-2 px-2.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-medium text-left transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+            >
+              <div className="font-semibold text-purple-300">Test Account</div>
+              <div className="text-[10px] text-gray-400 truncate">bhargavambati09@...</div>
+            </button>
+          </div>
+        </div>
+
         {/* Continue with Google Button */}
         <button
           type="button"
           id="google-login-btn"
           onClick={handleGoogleSignInClick}
           disabled={loading}
-          className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-medium text-sm transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] mb-4 cursor-pointer"
+          className="w-full flex items-center justify-center gap-3 py-2.5 px-4 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-white font-medium text-sm transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] mb-4 cursor-pointer"
         >
           <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
             <path d="M17.64 9.20455C17.64 8.56636 17.5827 7.95273 17.4764 7.36364H9V10.845H13.8436C13.635 11.97 13.0009 12.9232 12.0477 13.5614V15.8195H14.9564C16.6582 14.2527 17.64 11.9455 17.64 9.20455Z" fill="#4285F4"/>
@@ -125,9 +174,9 @@ const LoginPage = () => {
           Continue with Google
         </button>
 
-        <div className="relative flex items-center justify-center my-5">
+        <div className="relative flex items-center justify-center my-4">
           <div className="border-t border-white/10 w-full" />
-          <span className="bg-dark-800 px-3 text-xs text-gray-500 uppercase tracking-wider absolute">Or continue with email</span>
+          <span className="bg-dark-800 px-3 text-xs text-gray-500 uppercase tracking-wider absolute">Or sign in with email</span>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -162,13 +211,16 @@ const LoginPage = () => {
           </div>
 
           {error && (
-            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium">
-              {error}
+            <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium space-y-1">
+              <div>{error}</div>
+              <div className="text-[11px] text-gray-400">
+                Hint: Use the <strong>Demo Quick Access</strong> buttons above, or password: <span className="font-mono text-brand-300">password123</span>
+              </div>
             </div>
           )}
 
           <button type="submit" disabled={loading}
-            className="btn-primary w-full py-3 flex items-center justify-center gap-2">
+            className="btn-primary w-full py-3 flex items-center justify-center gap-2 cursor-pointer">
             {loading ? <Spinner size={18} /> : 'Sign In'}
           </button>
         </form>

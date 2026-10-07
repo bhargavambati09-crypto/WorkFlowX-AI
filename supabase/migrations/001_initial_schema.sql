@@ -70,6 +70,7 @@ CREATE TABLE tasks (
   requires_approval BOOLEAN DEFAULT FALSE,
   deadline TIMESTAMPTZ,
   estimated_duration INTEGER DEFAULT 30, -- in minutes
+  task_order INTEGER DEFAULT 1,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -101,6 +102,8 @@ CREATE TABLE approvals (
   risk_level TEXT DEFAULT 'MEDIUM' CHECK (risk_level IN ('LOW', 'MEDIUM', 'HIGH', 'CRITICAL')),
   status TEXT DEFAULT 'pending' CHECK (status IN ('pending', 'approved', 'rejected')),
   approved_by UUID REFERENCES profiles(id),
+  rejection_reason TEXT,
+  notes TEXT,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -238,6 +241,282 @@ CREATE TRIGGER update_tasks_updated_at BEFORE UPDATE ON tasks
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_approvals_updated_at BEFORE UPDATE ON approvals
   FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+-- ============================================================
+-- SEED DATA (Hackathon Demo & Initial Enterprise Workflows)
+-- ============================================================
+
+-- 1. Default Admin & Demo Profiles
+INSERT INTO profiles (id, name, email, password_hash, role)
+VALUES 
+  ('00000000-0000-0000-0000-000000000001', 'Demo Administrator', 'demo@workflowx.ai', '$2a$10$iwg3g/aJ0lbdDQUt5RdiVOZV1zdXKLHxBoMCZKmb3CmVlFHm34AQG', 'admin'),
+  ('00000000-0000-0000-0000-000000000002', 'Judge Evaluator', 'judge@workflowx.ai', '$2a$10$iwg3g/aJ0lbdDQUt5RdiVOZV1zdXKLHxBoMCZKmb3CmVlFHm34AQG', 'user')
+ON CONFLICT (id) DO NOTHING;
+
+-- 2. Main Hackathon Demo Workflow
+-- Scenario: "A customer was charged for an order, but the order was not created."
+INSERT INTO workflows (
+  id, title, description, department, deadline, category, priority, impact, status,
+  created_by, ai_analysis, current_step, requires_approval, health_score
+)
+VALUES (
+  '00000000-0000-0000-0000-000000000010',
+  'A customer was charged for an order, but the order was not created.',
+  'Customer was billed $129.00 on Stripe (txn_89410). Payment succeeded, but the downstream order creation queue timed out. The customer submitted an urgent complaint.',
+  'Billing & Fulfillment',
+  NOW() + INTERVAL '24 hours',
+  'Payment Issue',
+  'HIGH',
+  'HIGH',
+  'executing',
+  '00000000-0000-0000-0000-000000000001',
+  '{"summary": "Payment transaction was processed successfully, but downstream order record was not generated due to asynchronous queue timeout.", "category": "Payment Issue", "priority": "HIGH", "priorityReason": "Direct financial risk and customer dissatisfaction from unfulfilled charge.", "impact": "HIGH", "impactReason": "Requires balance reconciliation and customer ticket resolution.", "confidence": 0.96, "departments": ["Finance", "Support", "Fulfillment"], "recommendedActions": ["Verify payment gateway transaction", "Inspect database records", "Approve customer refund or order reissue", "Transmit customer notification"]}'::jsonb,
+  'Execution phase active with real-time agent monitoring',
+  TRUE,
+  92
+)
+ON CONFLICT (id) DO NOTHING;
+
+-- 3. Additional Enterprise Demo Workflows (Section 31)
+INSERT INTO workflows (
+  id, title, description, department, deadline, category, priority, impact, status,
+  created_by, ai_analysis, current_step, requires_approval, health_score
+)
+VALUES 
+  (
+    '00000000-0000-0000-0000-000000000020',
+    'Delayed Delivery in Fulfillment Center',
+    'Batch shipping container #4092 held at regional logistics hub due to customs paperwork discrepancy.',
+    'Logistics & Supply Chain',
+    NOW() + INTERVAL '48 hours',
+    'Operational Issue',
+    'MEDIUM',
+    'MEDIUM',
+    'ready',
+    '00000000-0000-0000-0000-000000000001',
+    '{"summary": "Regional logistics bottleneck impacting 45 customer shipments due to import documentation.", "category": "Operational Issue", "priority": "MEDIUM", "confidence": 0.91}'::jsonb,
+    'Awaiting carrier manifest update',
+    FALSE,
+    88
+  ),
+  (
+    '00000000-0000-0000-0000-000000000030',
+    'Employee System Access Request',
+    'Senior Financial Analyst requested elevated write credentials to quarterly forecasting database.',
+    'IT & Security',
+    NOW() + INTERVAL '12 hours',
+    'Security Issue',
+    'LOW',
+    'LOW',
+    'awaiting_approval',
+    '00000000-0000-0000-0000-000000000001',
+    '{"summary": "Elevated database role provisioning requiring manager sign-off.", "category": "Security Issue", "priority": "LOW", "confidence": 0.95}'::jsonb,
+    'Manager authorization pending',
+    TRUE,
+    95
+  ),
+  (
+    '00000000-0000-0000-0000-000000000040',
+    'IT Core Database Latency Spike',
+    'Primary read-replica CPU exceeded 94% threshold causing 1200ms latency on inventory lookups.',
+    'Infrastructure',
+    NOW() + INTERVAL '6 hours',
+    'Technical Issue',
+    'CRITICAL',
+    'CRITICAL',
+    'monitoring',
+    '00000000-0000-0000-0000-000000000001',
+    '{"summary": "Critical read-replica performance degradation threatening API throughput SLAs.", "category": "Technical Issue", "priority": "CRITICAL", "confidence": 0.98}'::jsonb,
+    'Auto-scaling secondary read-pool deployed',
+    FALSE,
+    80
+  ),
+  (
+    '00000000-0000-0000-0000-000000000050',
+    'Critical Supplier Logistics Delay',
+    'Tier-1 microchip component supplier reported 10-day fabrication delay affecting assembly line 3.',
+    'Procurement',
+    NOW() + INTERVAL '72 hours',
+    'Supply Chain Issue',
+    'HIGH',
+    'HIGH',
+    'planning',
+    '00000000-0000-0000-0000-000000000001',
+    '{"summary": "Component supply shortfall requiring alternative supplier quote gathering.", "category": "Supply Chain Issue", "priority": "HIGH", "confidence": 0.89}'::jsonb,
+    'Replanning inventory buffer',
+    FALSE,
+    85
+  )
+ON CONFLICT (id) DO NOTHING;
+
+-- 4. Tasks for the Main Demo Workflow
+INSERT INTO tasks (
+  id, workflow_id, title, description, assigned_agent, priority, status,
+  dependencies, requires_approval, estimated_duration
+)
+VALUES 
+  (
+    '00000000-0000-0000-0000-000000000101',
+    '00000000-0000-0000-0000-000000000010',
+    'Verify Payment Gateway Transaction',
+    'Check Stripe charge status, capture token, and verify payment legitimacy for txn_89410.',
+    'Finance Agent',
+    'HIGH',
+    'completed',
+    '[]'::jsonb,
+    FALSE,
+    15
+  ),
+  (
+    '00000000-0000-0000-0000-000000000102',
+    '00000000-0000-0000-0000-000000000010',
+    'Inspect Order Database Records',
+    'Search order fulfillment repository for orphan cart or uncommitted transactions.',
+    'Technical Agent',
+    'HIGH',
+    'completed',
+    '["Verify Payment Gateway Transaction"]'::jsonb,
+    FALSE,
+    20
+  ),
+  (
+    '00000000-0000-0000-0000-000000000103',
+    '00000000-0000-0000-0000-000000000010',
+    'Approve Customer Refund or Order Reissue',
+    'Evaluate whether to disburse refund of $129.00 or trigger priority warehouse dispatch.',
+    'Manager Agent',
+    'CRITICAL',
+    'in_progress',
+    '["Inspect Order Database Records"]'::jsonb,
+    TRUE,
+    15
+  ),
+  (
+    '00000000-0000-0000-0000-000000000104',
+    '00000000-0000-0000-0000-000000000010',
+    'Customer Communication & Resolution Dispatch',
+    'Transmit incident explanation and updated receipt/refund details to customer.',
+    'Support Agent',
+    'MEDIUM',
+    'pending',
+    '["Approve Customer Refund or Order Reissue"]'::jsonb,
+    FALSE,
+    10
+  )
+ON CONFLICT (id) DO NOTHING;
+
+-- 5. Agent Logs for Demo Workflow
+INSERT INTO agent_logs (id, workflow_id, agent_name, action, status, summary, confidence, timestamp)
+VALUES 
+  (
+    '00000000-0000-0000-0000-000000000201',
+    '00000000-0000-0000-0000-000000000010',
+    'Orchestrator',
+    'Workflow received and analysis initiated',
+    'completed',
+    'New problem statement ingested. Orchestrator activated multi-agent pipeline.',
+    0.98,
+    NOW() - INTERVAL '15 minutes'
+  ),
+  (
+    '00000000-0000-0000-0000-000000000202',
+    '00000000-0000-0000-0000-000000000010',
+    'Analysis Agent',
+    'Classified workflow priority',
+    'completed',
+    'Classified as HIGH priority due to direct customer financial impact and SLA risk.',
+    0.96,
+    NOW() - INTERVAL '14 minutes'
+  ),
+  (
+    '00000000-0000-0000-0000-000000000203',
+    '00000000-0000-0000-0000-000000000010',
+    'Task Planning Agent',
+    'Generated 4 actionable tasks',
+    'completed',
+    'Synthesized dependency graph across Finance, Technical, Manager, and Support agents.',
+    0.93,
+    NOW() - INTERVAL '13 minutes'
+  ),
+  (
+    '00000000-0000-0000-0000-000000000204',
+    '00000000-0000-0000-0000-000000000010',
+    'Finance Agent',
+    'Payment gateway verified',
+    'completed',
+    'Stripe charge txn_89410 confirmed captured ($129.00). Ledger marked paid.',
+    0.97,
+    NOW() - INTERVAL '10 minutes'
+  ),
+  (
+    '00000000-0000-0000-0000-000000000205',
+    '00000000-0000-0000-0000-000000000010',
+    'Technical Agent',
+    'Database audit completed',
+    'completed',
+    'Detected timeout exception in RabbitMQ order ingestion queue. No order record was committed.',
+    0.95,
+    NOW() - INTERVAL '6 minutes'
+  ),
+  (
+    '00000000-0000-0000-0000-000000000206',
+    '00000000-0000-0000-0000-000000000010',
+    'Monitoring Agent',
+    'Continuous telemetry active',
+    'active',
+    'All system metrics within nominal boundaries. 2 of 4 tasks completed. Awaiting authorization.',
+    0.98,
+    NOW() - INTERVAL '2 minutes'
+  )
+ON CONFLICT (id) DO NOTHING;
+
+-- 6. Human-in-the-Loop Approvals
+INSERT INTO approvals (
+  id, workflow_id, task_id, action, reason, ai_recommendation, risk_level, status
+)
+VALUES (
+  '00000000-0000-0000-0000-000000000301',
+  '00000000-0000-0000-0000-000000000010',
+  '00000000-0000-0000-0000-000000000103',
+  'Approve customer refund of $129.00',
+  'Payment was charged successfully on Stripe, but downstream order creation queue timed out.',
+  'Authorize customer refund to prevent chargeback and preserve customer satisfaction.',
+  'MEDIUM',
+  'pending'
+)
+ON CONFLICT (id) DO NOTHING;
+
+-- 7. Workflow Events Audit Log
+INSERT INTO workflow_events (id, workflow_id, event_type, actor_type, actor_name, message, metadata)
+VALUES 
+  (
+    '00000000-0000-0000-0000-000000000401',
+    '00000000-0000-0000-0000-000000000010',
+    'ANALYSIS_STARTED',
+    'Orchestrator',
+    'Orchestrator',
+    'Analysis pipeline initiated for workflow: A customer was charged for an order, but the order was not created.',
+    '{"source": "demo"}'::jsonb
+  ),
+  (
+    '00000000-0000-0000-0000-000000000402',
+    '00000000-0000-0000-0000-000000000010',
+    'PLANNING_COMPLETE',
+    'Task Planning Agent',
+    'Planning Agent',
+    '4 tasks generated with cross-agent dependencies.',
+    '{"taskCount": 4}'::jsonb
+  ),
+  (
+    '00000000-0000-0000-0000-000000000403',
+    '00000000-0000-0000-0000-000000000010',
+    'APPROVAL_REQUESTED',
+    'Manager Agent',
+    'Manager Agent',
+    'Human authorization requested for refund disbursement ($129.00).',
+    '{"amount": 129.00}'::jsonb
+  )
+ON CONFLICT (id) DO NOTHING;
 
 -- ============================================================
 -- COMPLETED: Schema migration 001 applied successfully

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { DEMO_WORKFLOW, DEMO_STATS } from './mockData';
 
 const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-const API_URL = isLocalhost ? (import.meta.env.VITE_API_URL || 'http://localhost:5000') : '';
+const API_URL = import.meta.env.VITE_API_URL || (isLocalhost ? 'http://localhost:5000' : '');
 
 const api = axios.create({
   baseURL: API_URL ? `${API_URL}/api` : '/api',
@@ -113,8 +113,8 @@ api.interceptors.response.use(
           }
         });
       }
-      if (url.includes('/tasks')) {
-        return Promise.resolve({ data: { tasks: DEMO_WORKFLOW.tasks } });
+      if (/\/tasks($|\?)/.test(url)) {
+        return Promise.resolve({ data: { tasks: DEMO_WORKFLOW.tasks, data: DEMO_WORKFLOW.tasks } });
       }
       if (url.includes('/approvals')) {
         return Promise.resolve({ data: { approvals: DEMO_WORKFLOW.approvals } });

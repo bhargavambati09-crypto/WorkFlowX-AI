@@ -94,8 +94,7 @@ const rejectAction = async (req, res, next) => {
     const { data, error } = await supabase.from('approvals').update({
       status: 'rejected',
       approved_by: req.user.id,
-      rejection_reason: reasonGiven,
-      notes: reasonGiven,
+      reason: reasonGiven,
       updated_at: new Date().toISOString(),
     }).eq('id', req.params.id).select().single();
 
@@ -105,7 +104,7 @@ const rejectAction = async (req, res, next) => {
     let alternative = 'Consider escalating to a senior manager for review.';
     try {
       const aiResult = await generateJSON(`You are WorkFlowX AI. A human rejected the following action: "${approval.action}". 
-      Reason given: "${notes || 'No reason provided'}". 
+      Reason given: "${reasonGiven}". 
       Generate a brief alternative recommendation in JSON: {"alternative": "brief alternative action", "reasoning": "why this is better"}`);
       alternative = aiResult.alternative || alternative;
     } catch (e) { /* use default */ }
