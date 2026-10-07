@@ -2,21 +2,42 @@ import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { TopBar } from '../components/layout/Sidebar';
 import { toast } from '../components/ui/Toast';
-import {
-  Settings, User, Shield, Cpu, Key, Database,
-  CheckCircle2, Sparkles, RefreshCw, AlertTriangle, ExternalLink
-} from 'lucide-react';
+import { User, Shield, Key, Database, Sparkles, CheckCircle2, Edit2, Check, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function ProfilePage() {
-  const { user } = useAuth();
+  const { user, updateProfile } = useAuth();
   const [confidenceThreshold, setConfidenceThreshold] = useState(0.75);
   const [autoApproveLimit, setAutoApproveLimit] = useState(100);
   const [geminiModel, setGeminiModel] = useState('gemini-1.5-pro');
 
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [newName, setNewName] = useState(user?.name || '');
+  const [updatingName, setUpdatingName] = useState(false);
+
   const handleSaveSettings = (e) => {
     e.preventDefault();
     toast.success('Agent governance configurations saved');
+  };
+
+  const handleUpdateName = async (e) => {
+    e.preventDefault();
+    if (!newName.trim()) {
+      toast.error('Please enter a valid name');
+      return;
+    }
+    setUpdatingName(true);
+    try {
+      if (updateProfile) {
+        await updateProfile(newName.trim());
+      }
+      toast.success('Display name updated successfully');
+      setIsEditingName(false);
+    } catch (err) {
+      toast.error(err?.response?.data?.error || 'Failed to update name');
+    } finally {
+      setUpdatingName(false);
+    }
   };
 
   return (
@@ -28,21 +49,64 @@ export default function ProfilePage() {
 
       {/* User Info Card */}
       <div className="glass-card p-6 rounded-xl border border-white/5 space-y-6">
-        <h3 className="text-base font-bold text-white flex items-center gap-2">
-          <User size={18} className="text-brand-400" />
-          Operator Profile
-        </h3>
+        <div className="flex items-center justify-between">
+          <h3 className="text-base font-bold text-white flex items-center gap-2">
+            <User size={18} className="text-brand-400" />
+            User Profile
+          </h3>
+          {!isEditingName && (
+            <button
+              onClick={() => {
+                setNewName(user?.name || '');
+                setIsEditingName(true);
+              }}
+              className="text-xs text-brand-400 hover:text-brand-300 flex items-center gap-1.5 px-2.5 py-1 rounded-lg border border-brand-500/20 bg-brand-500/10 hover:bg-brand-500/20 transition-all cursor-pointer"
+            >
+              <Edit2 size={13} />
+              Edit Display Name
+            </button>
+          )}
+        </div>
 
         <div className="flex items-center gap-4">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-2xl font-bold text-white">
+          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-brand-500 to-purple-600 flex items-center justify-center text-2xl font-bold text-white shadow-lg shadow-brand-500/20 flex-shrink-0">
             {user?.name?.[0]?.toUpperCase() || 'U'}
           </div>
-          <div>
-            <h4 className="text-lg font-bold text-white">{user?.name || 'Administrator'}</h4>
-            <p className="text-sm text-gray-400">{user?.email || 'admin@workflowx.ai'}</p>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-brand-500/20 text-brand-400 border border-brand-500/30">
-                ROLE: {user?.role || 'ENTERPRISE_ADMIN'}
+          <div className="flex-1 min-w-0">
+            {isEditingName ? (
+              <form onSubmit={handleUpdateName} className="flex items-center gap-2 max-w-md">
+                <input
+                  type="text"
+                  value={newName}
+                  onChange={(e) => setNewName(e.target.value)}
+                  className="input-field py-1.5 text-sm"
+                  placeholder="Enter your real full name"
+                  autoFocus
+                  required
+                />
+                <button
+                  type="submit"
+                  disabled={updatingName}
+                  className="btn-primary py-1.5 px-3 text-xs flex items-center gap-1"
+                >
+                  <Check size={14} />
+                  Save
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setIsEditingName(false)}
+                  className="btn-ghost py-1.5 px-2.5 text-xs text-gray-400 hover:text-white"
+                >
+                  <X size={14} />
+                </button>
+              </form>
+            ) : (
+              <h4 className="text-lg font-bold text-white truncate">{user?.name || 'User'}</h4>
+            )}
+            <p className="text-sm text-gray-400 mt-0.5 truncate">{user?.email || 'user@workflowx.ai'}</p>
+            <div className="flex items-center gap-2 mt-2 flex-wrap">
+              <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-brand-500/20 text-brand-400 border border-brand-500/30 tracking-wider">
+                ROLE: {user?.role?.toUpperCase() || 'USER'}
               </span>
               <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
                 AUTHENTICATED (JWT)
@@ -67,7 +131,7 @@ export default function ProfilePage() {
             <select
               value={geminiModel}
               onChange={(e) => setGeminiModel(e.target.value)}
-              className="bg-dark-800 border border-white/10 text-xs text-gray-300 rounded-lg px-3 py-2 w-full focus:border-brand-500 focus:outline-none"
+              className="input-field text-xs"
             >
               <option value="gemini-1.5-pro">Google Gemini 1.5 Pro (Autonomous Reasoning & Structured Output)</option>
               <option value="gemini-1.5-flash">Google Gemini 1.5 Flash (High-Throughput Task Delegation)</option>
@@ -79,8 +143,8 @@ export default function ProfilePage() {
 
           <div>
             <div className="flex justify-between text-xs mb-1">
-              <span className="text-gray-300 font-semibold">Autonomous Confidence Threshold</span>
-              <span className="font-mono text-brand-400">{Math.round(confidenceThreshold * 100)}%</span>
+              <span className="font-semibold text-gray-300">Minimum Autonomous Confidence Threshold</span>
+              <span className="text-brand-400 font-mono font-bold">{Math.round(confidenceThreshold * 100)}%</span>
             </div>
             <input
               type="range"
@@ -92,7 +156,7 @@ export default function ProfilePage() {
               className="w-full accent-brand-500 cursor-pointer"
             />
             <p className="text-[11px] text-gray-500 mt-1">
-              Decisions with confidence below this threshold require Human-in-the-Loop review before execution.
+              If an agent's confidence score drops below this limit, it automatically yields execution to Human-in-the-Loop approval.
             </p>
           </div>
 

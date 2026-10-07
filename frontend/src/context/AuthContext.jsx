@@ -11,11 +11,15 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     const savedUser = localStorage.getItem('user');
     if (token && savedUser) {
-      setUser(JSON.parse(savedUser));
-      // Verify token is still valid
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (_) {}
+      // Verify token is still valid with backend /api/auth/me
       authAPI.me().then(res => {
-        setUser(res.data.user);
-        localStorage.setItem('user', JSON.stringify(res.data.user));
+        if (res.data?.user) {
+          setUser(res.data.user);
+          localStorage.setItem('user', JSON.stringify(res.data.user));
+        }
       }).catch(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -28,29 +32,37 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const res = await authAPI.login({ email, password });
-    const { token, user } = res.data;
+    const { token, user: loggedInUser } = res.data;
     localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    setUser(user);
-    return user;
+    localStorage.setItem('user', JSON.stringify(loggedInUser));
+    setUser(loggedInUser);
+    return loggedInUser;
   };
 
   const register = async (name, email, password) => {
     const res = await authAPI.register({ name, email, password });
-    const { token, user } = res.data;
+    const { token, user: registeredUser } = res.data;
     localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    setUser(user);
-    return user;
+    localStorage.setItem('user', JSON.stringify(registeredUser));
+    setUser(registeredUser);
+    return registeredUser;
   };
 
   const loginWithGoogle = async (googleData) => {
     const res = await authAPI.googleAuth(googleData);
-    const { token, user } = res.data;
+    const { token, user: googleUser } = res.data;
     localStorage.setItem('token', token);
-    localStorage.setItem('user', JSON.stringify(user));
-    setUser(user);
-    return user;
+    localStorage.setItem('user', JSON.stringify(googleUser));
+    setUser(googleUser);
+    return googleUser;
+  };
+
+  const updateProfile = async (name) => {
+    const res = await authAPI.updateProfile({ name });
+    const updated = res.data.user;
+    localStorage.setItem('user', JSON.stringify(updated));
+    setUser(updated);
+    return updated;
   };
 
   const logout = () => {
@@ -60,7 +72,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, loginWithGoogle, logout, loading }}>
+    <AuthContext.Provider value={{ user, login, register, loginWithGoogle, updateProfile, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

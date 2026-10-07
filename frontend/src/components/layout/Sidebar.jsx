@@ -86,8 +86,13 @@ export const Sidebar = ({ collapsed, setCollapsed }) => {
                 {user?.name?.[0]?.toUpperCase() || 'U'}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-white truncate">{user?.name}</div>
+                <div className="text-sm font-medium text-white truncate">{user?.name || 'User'}</div>
                 <div className="text-xs text-gray-500 truncate">{user?.email}</div>
+                <div className="mt-1 flex items-center">
+                  <span className="text-[9px] px-1.5 py-0.2 rounded font-mono font-semibold bg-brand-500/15 text-brand-400 border border-brand-500/20 uppercase tracking-wide">
+                    {user?.role || 'user'}
+                  </span>
+                </div>
               </div>
             </div>
           )}

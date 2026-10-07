@@ -119,6 +119,269 @@
       "tasks": [],
       "logs": [],
       "approvals": []
+    },
+    {
+      "title": "Customer Payment Issue - Order Not Created",
+      "description": "A customer was charged for an order, but the order was not created in our system. The payment of ₹4,500 was successfully debited from the customer's account (Transaction ID: TXN-2024-78923) but no order confirmation was generated. The customer has complained and is requesting either order fulfillment or a full refund. This is causing significant customer dissatisfaction and potential revenue impact.",
+      "department": "Finance & Customer Support",
+      "status": "monitoring",
+      "priority": "HIGH",
+      "created_by": "dafc7352-4789-47f5-87a9-9275d527f8c9",
+      "health_score": 100,
+      "created_at": "2026-10-07T11:33:02.988Z",
+      "updated_at": "2026-10-07T12:10:08.088Z",
+      "id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "ai_analysis": {
+        "summary": "Analysis of: A customer was charged for an order, but the order was not created in our system. The payment of ₹4,...",
+        "category": "Operational Issue",
+        "priority": "HIGH",
+        "priorityReason": "Default high priority due to analysis failure - requires manual review",
+        "impact": "MEDIUM",
+        "impactReason": "Impact requires manual assessment",
+        "confidence": 0.5,
+        "departments": [
+          "Operations",
+          "Management"
+        ],
+        "recommendedActions": [
+          "Manual review required",
+          "Escalate to operations team",
+          "Document the issue"
+        ],
+        "missingInformation": [
+          "AI analysis temporarily unavailable"
+        ],
+        "estimatedResolutionTime": "2-4 hours",
+        "requiresHumanApproval": true,
+        "approvalReason": "Manual review required as AI analysis encountered an error",
+        "riskLevel": "MEDIUM",
+        "affectedUsers": "Unknown"
+      },
+      "category": "Operational Issue",
+      "impact": "MEDIUM",
+      "requires_approval": true,
+      "current_step": "Tasks planned and ready for execution",
+      "tasks": [
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "title": "Investigate and document the issue",
+          "description": "Thoroughly investigate the reported issue: A customer was charged for an order, but the order was not created in our system. The payment of ₹4,500 was successfully debited from the customer's account (Transaction ID: TXN-2024-78923) but no ord",
+          "assigned_agent": "Finance Agent",
+          "priority": "HIGH",
+          "status": "in_progress",
+          "dependencies": "[]",
+          "requires_approval": false,
+          "estimated_duration": 30,
+          "created_at": "2026-10-07T11:33:29.932Z",
+          "updated_at": "2026-10-07T12:10:02.009Z",
+          "id": "3c884c3f-08ad-48f0-a9bc-59abc7cab02b"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "title": "Assess impact and affected parties",
+          "description": "Evaluate the full scope of impact on business operations and stakeholders",
+          "assigned_agent": "Operations Agent",
+          "priority": "HIGH",
+          "status": "pending",
+          "dependencies": "[\"Investigate and document the issue\"]",
+          "requires_approval": false,
+          "estimated_duration": 20,
+          "created_at": "2026-10-07T11:33:29.964Z",
+          "updated_at": "2026-10-07T11:33:29.964Z",
+          "id": "570a70ca-02fa-4ba8-95bf-ca8839e6b39d"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "title": "Implement resolution and verify fix",
+          "description": "Apply the agreed resolution and verify the issue is fully resolved",
+          "assigned_agent": "Support Agent",
+          "priority": "HIGH",
+          "status": "pending",
+          "dependencies": "[\"Assess impact and affected parties\"]",
+          "requires_approval": true,
+          "estimated_duration": 45,
+          "created_at": "2026-10-07T11:33:29.964Z",
+          "updated_at": "2026-10-07T11:33:29.964Z",
+          "id": "9f740f20-c6b4-43ed-a571-cc3b4ff2b3be"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "title": "Document resolution and close workflow",
+          "description": "Document lessons learned, update procedures, and formally close the workflow",
+          "assigned_agent": "Operations Agent",
+          "priority": "MEDIUM",
+          "status": "pending",
+          "dependencies": "[\"Implement resolution and verify fix\"]",
+          "requires_approval": false,
+          "estimated_duration": 15,
+          "created_at": "2026-10-07T11:33:29.964Z",
+          "updated_at": "2026-10-07T11:33:29.964Z",
+          "id": "3c1738a0-328b-402e-898f-162d5168c3d1"
+        }
+      ],
+      "logs": [
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Monitoring Agent",
+          "action": "Monitoring activated",
+          "status": "active",
+          "summary": "Real-time monitoring of all task progress, SLA compliance, and agent health",
+          "confidence": 0.96,
+          "timestamp": "2026-10-07T12:10:08.094Z",
+          "id": "7e1fd210-60d4-4e11-890c-2c88fec4f3d8",
+          "created_at": "2026-10-07T12:10:08.298Z",
+          "updated_at": "2026-10-07T12:10:08.298Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Orchestrator",
+          "action": "Execution phase active",
+          "status": "active",
+          "summary": "1 tasks now in execution. Monitoring Agent activated.",
+          "confidence": 0.94,
+          "timestamp": "2026-10-07T12:10:04.988Z",
+          "id": "7918de39-93cb-4810-8742-45f498069634",
+          "created_at": "2026-10-07T12:10:06.252Z",
+          "updated_at": "2026-10-07T12:10:06.252Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Finance Agent",
+          "action": "Executing: Investigate and document the issue",
+          "status": "active",
+          "summary": "Finance Agent is now processing: Thoroughly investigate the reported issue: A customer was charged for an order, but the order was no",
+          "confidence": 0.87,
+          "timestamp": "2026-10-07T12:10:02.645Z",
+          "id": "f29b254c-c3c6-422e-9646-ce911e1baf39",
+          "created_at": "2026-10-07T12:10:04.672Z",
+          "updated_at": "2026-10-07T12:10:04.672Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Orchestrator",
+          "action": "Initiating workflow execution",
+          "status": "active",
+          "summary": "Starting execution pipeline. Delegating tasks to specialized agents.",
+          "confidence": 0.95,
+          "timestamp": "2026-10-07T12:10:00.030Z",
+          "id": "3f728904-f110-4898-81b5-7738499e2866",
+          "created_at": "2026-10-07T12:10:00.611Z",
+          "updated_at": "2026-10-07T12:10:00.611Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Orchestrator",
+          "action": "Planning complete - workflow ready",
+          "status": "completed",
+          "summary": "Workflow is ready for execution. 4 tasks created. Requires approval: true",
+          "confidence": 0.96,
+          "timestamp": "2026-10-07T11:33:30.295Z",
+          "id": "cb390922-506f-4a8a-8dab-d89ca2804d1d",
+          "created_at": "2026-10-07T11:33:30.527Z",
+          "updated_at": "2026-10-07T11:33:30.527Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Coordination Agent",
+          "action": "Agent assignments optimized",
+          "status": "completed",
+          "summary": "All 4 tasks assigned to specialized agents",
+          "confidence": 0.91,
+          "timestamp": "2026-10-07T11:33:29.479Z",
+          "id": "2c0bb394-fe54-4da2-9e7b-af29c91cd4d3",
+          "created_at": "2026-10-07T11:33:29.878Z",
+          "updated_at": "2026-10-07T11:33:29.878Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Coordination Agent",
+          "action": "Optimizing agent assignments",
+          "status": "active",
+          "summary": "Matching tasks to best-fit agents based on capabilities and specializations",
+          "confidence": 0,
+          "timestamp": "2026-10-07T11:33:27.269Z",
+          "id": "e22f6267-2363-41f0-abd3-8981183214a2",
+          "created_at": "2026-10-07T11:33:28.147Z",
+          "updated_at": "2026-10-07T11:33:28.147Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Task Planning Agent",
+          "action": "Task plan created",
+          "status": "completed",
+          "summary": "Generated 4 tasks. Estimated resolution: 2-4 hours",
+          "confidence": 0.93,
+          "timestamp": "2026-10-07T11:33:25.217Z",
+          "id": "5736cd01-70a1-4e91-8523-2a794939eb6a",
+          "created_at": "2026-10-07T11:33:26.474Z",
+          "updated_at": "2026-10-07T11:33:26.474Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Task Planning Agent",
+          "action": "Generating task plan",
+          "status": "active",
+          "summary": "Converting analysis into actionable tasks with dependencies and agent assignments",
+          "confidence": 0,
+          "timestamp": "2026-10-07T11:33:15.046Z",
+          "id": "dfa6d23a-f99b-4c25-92a8-4a41ec8e6460",
+          "created_at": "2026-10-07T11:33:15.138Z",
+          "updated_at": "2026-10-07T11:33:15.138Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Analysis Agent",
+          "action": "Analysis complete",
+          "status": "completed",
+          "summary": "Classified as Operational Issue | Priority: HIGH | Confidence: 50%",
+          "confidence": 0.5,
+          "timestamp": "2026-10-07T11:33:14.405Z",
+          "id": "5759adf0-7a10-4e89-9b1f-e32604c270ac",
+          "created_at": "2026-10-07T11:33:14.940Z",
+          "updated_at": "2026-10-07T11:33:14.940Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Analysis Agent",
+          "action": "Analyzing business problem",
+          "status": "active",
+          "summary": "Examining problem description, identifying category, priority, and impact",
+          "confidence": 0,
+          "timestamp": "2026-10-07T11:33:04.287Z",
+          "id": "b317b962-9c50-460b-ab23-aed56c2bad4f",
+          "created_at": "2026-10-07T11:33:04.371Z",
+          "updated_at": "2026-10-07T11:33:04.371Z"
+        },
+        {
+          "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+          "agent_name": "Orchestrator",
+          "action": "Workflow received and analysis initiated",
+          "status": "active",
+          "summary": "New workflow \"Customer Payment Issue - Order Not Created\" received. Delegating to Analysis Agent.",
+          "confidence": 0.98,
+          "timestamp": "2026-10-07T11:33:04.055Z",
+          "id": "d43d3acb-ddd0-4d8a-9ead-5cc4fc8c4e24",
+          "created_at": "2026-10-07T11:33:04.150Z",
+          "updated_at": "2026-10-07T11:33:04.150Z"
+        }
+      ],
+      "approvals": []
+    },
+    {
+      "title": "Integration Test Incident",
+      "description": "Automated test problem description for system validation",
+      "department": "Operations",
+      "deadline": null,
+      "status": "draft",
+      "priority": "MEDIUM",
+      "created_by": "00000000-0000-0000-0000-000000000001",
+      "health_score": 100,
+      "created_at": "2026-10-07T12:20:39.062Z",
+      "updated_at": "2026-10-07T12:20:41.253Z",
+      "id": "df2fd155-37a3-4f2c-a823-46cc5ea34628",
+      "tasks": [],
+      "logs": [],
+      "approvals": []
     }
   ],
   "tasks": [
@@ -223,6 +486,62 @@
       "created_at": "2026-10-07T07:31:17.023Z",
       "updated_at": "2026-10-07T07:31:17.023Z",
       "id": "d90e6503-69bd-4b84-a6dd-38bb0ebda928"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "title": "Investigate and document the issue",
+      "description": "Thoroughly investigate the reported issue: A customer was charged for an order, but the order was not created in our system. The payment of ₹4,500 was successfully debited from the customer's account (Transaction ID: TXN-2024-78923) but no ord",
+      "assigned_agent": "Finance Agent",
+      "priority": "HIGH",
+      "status": "in_progress",
+      "dependencies": "[]",
+      "requires_approval": false,
+      "estimated_duration": 30,
+      "created_at": "2026-10-07T11:33:29.932Z",
+      "updated_at": "2026-10-07T12:10:02.009Z",
+      "id": "3c884c3f-08ad-48f0-a9bc-59abc7cab02b"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "title": "Assess impact and affected parties",
+      "description": "Evaluate the full scope of impact on business operations and stakeholders",
+      "assigned_agent": "Operations Agent",
+      "priority": "HIGH",
+      "status": "pending",
+      "dependencies": "[\"Investigate and document the issue\"]",
+      "requires_approval": false,
+      "estimated_duration": 20,
+      "created_at": "2026-10-07T11:33:29.964Z",
+      "updated_at": "2026-10-07T11:33:29.964Z",
+      "id": "570a70ca-02fa-4ba8-95bf-ca8839e6b39d"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "title": "Implement resolution and verify fix",
+      "description": "Apply the agreed resolution and verify the issue is fully resolved",
+      "assigned_agent": "Support Agent",
+      "priority": "HIGH",
+      "status": "pending",
+      "dependencies": "[\"Assess impact and affected parties\"]",
+      "requires_approval": true,
+      "estimated_duration": 45,
+      "created_at": "2026-10-07T11:33:29.964Z",
+      "updated_at": "2026-10-07T11:33:29.964Z",
+      "id": "9f740f20-c6b4-43ed-a571-cc3b4ff2b3be"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "title": "Document resolution and close workflow",
+      "description": "Document lessons learned, update procedures, and formally close the workflow",
+      "assigned_agent": "Operations Agent",
+      "priority": "MEDIUM",
+      "status": "pending",
+      "dependencies": "[\"Implement resolution and verify fix\"]",
+      "requires_approval": false,
+      "estimated_duration": 15,
+      "created_at": "2026-10-07T11:33:29.964Z",
+      "updated_at": "2026-10-07T11:33:29.964Z",
+      "id": "3c1738a0-328b-402e-898f-162d5168c3d1"
     }
   ],
   "agent_logs": [
@@ -453,6 +772,150 @@
       "id": "cac6c577-837d-4054-a7ef-bc105367b4c1",
       "created_at": "2026-10-07T07:31:17.594Z",
       "updated_at": "2026-10-07T07:31:17.594Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Orchestrator",
+      "action": "Workflow received and analysis initiated",
+      "status": "active",
+      "summary": "New workflow \"Customer Payment Issue - Order Not Created\" received. Delegating to Analysis Agent.",
+      "confidence": 0.98,
+      "timestamp": "2026-10-07T11:33:04.055Z",
+      "id": "d43d3acb-ddd0-4d8a-9ead-5cc4fc8c4e24",
+      "created_at": "2026-10-07T11:33:04.150Z",
+      "updated_at": "2026-10-07T11:33:04.150Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Analysis Agent",
+      "action": "Analyzing business problem",
+      "status": "active",
+      "summary": "Examining problem description, identifying category, priority, and impact",
+      "confidence": 0,
+      "timestamp": "2026-10-07T11:33:04.287Z",
+      "id": "b317b962-9c50-460b-ab23-aed56c2bad4f",
+      "created_at": "2026-10-07T11:33:04.371Z",
+      "updated_at": "2026-10-07T11:33:04.371Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Analysis Agent",
+      "action": "Analysis complete",
+      "status": "completed",
+      "summary": "Classified as Operational Issue | Priority: HIGH | Confidence: 50%",
+      "confidence": 0.5,
+      "timestamp": "2026-10-07T11:33:14.405Z",
+      "id": "5759adf0-7a10-4e89-9b1f-e32604c270ac",
+      "created_at": "2026-10-07T11:33:14.940Z",
+      "updated_at": "2026-10-07T11:33:14.940Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Task Planning Agent",
+      "action": "Generating task plan",
+      "status": "active",
+      "summary": "Converting analysis into actionable tasks with dependencies and agent assignments",
+      "confidence": 0,
+      "timestamp": "2026-10-07T11:33:15.046Z",
+      "id": "dfa6d23a-f99b-4c25-92a8-4a41ec8e6460",
+      "created_at": "2026-10-07T11:33:15.138Z",
+      "updated_at": "2026-10-07T11:33:15.138Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Task Planning Agent",
+      "action": "Task plan created",
+      "status": "completed",
+      "summary": "Generated 4 tasks. Estimated resolution: 2-4 hours",
+      "confidence": 0.93,
+      "timestamp": "2026-10-07T11:33:25.217Z",
+      "id": "5736cd01-70a1-4e91-8523-2a794939eb6a",
+      "created_at": "2026-10-07T11:33:26.474Z",
+      "updated_at": "2026-10-07T11:33:26.474Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Coordination Agent",
+      "action": "Optimizing agent assignments",
+      "status": "active",
+      "summary": "Matching tasks to best-fit agents based on capabilities and specializations",
+      "confidence": 0,
+      "timestamp": "2026-10-07T11:33:27.269Z",
+      "id": "e22f6267-2363-41f0-abd3-8981183214a2",
+      "created_at": "2026-10-07T11:33:28.147Z",
+      "updated_at": "2026-10-07T11:33:28.147Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Coordination Agent",
+      "action": "Agent assignments optimized",
+      "status": "completed",
+      "summary": "All 4 tasks assigned to specialized agents",
+      "confidence": 0.91,
+      "timestamp": "2026-10-07T11:33:29.479Z",
+      "id": "2c0bb394-fe54-4da2-9e7b-af29c91cd4d3",
+      "created_at": "2026-10-07T11:33:29.878Z",
+      "updated_at": "2026-10-07T11:33:29.878Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Orchestrator",
+      "action": "Planning complete - workflow ready",
+      "status": "completed",
+      "summary": "Workflow is ready for execution. 4 tasks created. Requires approval: true",
+      "confidence": 0.96,
+      "timestamp": "2026-10-07T11:33:30.295Z",
+      "id": "cb390922-506f-4a8a-8dab-d89ca2804d1d",
+      "created_at": "2026-10-07T11:33:30.527Z",
+      "updated_at": "2026-10-07T11:33:30.527Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Orchestrator",
+      "action": "Initiating workflow execution",
+      "status": "active",
+      "summary": "Starting execution pipeline. Delegating tasks to specialized agents.",
+      "confidence": 0.95,
+      "timestamp": "2026-10-07T12:10:00.030Z",
+      "id": "3f728904-f110-4898-81b5-7738499e2866",
+      "created_at": "2026-10-07T12:10:00.611Z",
+      "updated_at": "2026-10-07T12:10:00.611Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Finance Agent",
+      "action": "Executing: Investigate and document the issue",
+      "status": "active",
+      "summary": "Finance Agent is now processing: Thoroughly investigate the reported issue: A customer was charged for an order, but the order was no",
+      "confidence": 0.87,
+      "timestamp": "2026-10-07T12:10:02.645Z",
+      "id": "f29b254c-c3c6-422e-9646-ce911e1baf39",
+      "created_at": "2026-10-07T12:10:04.672Z",
+      "updated_at": "2026-10-07T12:10:04.672Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Orchestrator",
+      "action": "Execution phase active",
+      "status": "active",
+      "summary": "1 tasks now in execution. Monitoring Agent activated.",
+      "confidence": 0.94,
+      "timestamp": "2026-10-07T12:10:04.988Z",
+      "id": "7918de39-93cb-4810-8742-45f498069634",
+      "created_at": "2026-10-07T12:10:06.252Z",
+      "updated_at": "2026-10-07T12:10:06.252Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "agent_name": "Monitoring Agent",
+      "action": "Monitoring activated",
+      "status": "active",
+      "summary": "Real-time monitoring of all task progress, SLA compliance, and agent health",
+      "confidence": 0.96,
+      "timestamp": "2026-10-07T12:10:08.094Z",
+      "id": "7e1fd210-60d4-4e11-890c-2c88fec4f3d8",
+      "created_at": "2026-10-07T12:10:08.298Z",
+      "updated_at": "2026-10-07T12:10:08.298Z"
     }
   ],
   "workflow_events": [
@@ -620,6 +1083,64 @@
       "created_at": "2026-10-07T08:29:41.476Z",
       "id": "19c8e901-86a0-485e-b04f-7c02e6eb2e82",
       "updated_at": "2026-10-07T08:29:41.575Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "event_type": "DEMO_WORKFLOW_CREATED",
+      "actor_type": "System",
+      "actor_name": "Demo Mode",
+      "message": "Demo workflow created: \"Customer Payment Issue - Order Not Created\"",
+      "metadata": {},
+      "created_at": "2026-10-07T11:33:03.474Z",
+      "id": "e204bed1-f6e9-4489-b24f-4bc3e030fdd8",
+      "updated_at": "2026-10-07T11:33:03.753Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "event_type": "ANALYSIS_STARTED",
+      "actor_type": "Orchestrator",
+      "actor_name": "Orchestrator",
+      "message": "Analysis pipeline initiated for workflow: Customer Payment Issue - Order Not Created",
+      "metadata": {},
+      "created_at": "2026-10-07T11:33:04.168Z",
+      "id": "5ee6399d-2153-411f-a0a2-023ba08d14e9",
+      "updated_at": "2026-10-07T11:33:04.280Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "event_type": "PLANNING_COMPLETE",
+      "actor_type": "Orchestrator",
+      "actor_name": "Orchestrator",
+      "message": "4 tasks generated and assigned. Workflow ready for execution.",
+      "metadata": {
+        "taskCount": 4,
+        "requiresApproval": true
+      },
+      "created_at": "2026-10-07T11:33:30.548Z",
+      "id": "f5acfc71-6b8f-40dc-a62f-e3d3989f953d",
+      "updated_at": "2026-10-07T11:33:30.741Z"
+    },
+    {
+      "workflow_id": "9d6103e1-535a-464c-9c7f-47c66f7a8099",
+      "event_type": "EXECUTION_STARTED",
+      "actor_type": "Orchestrator",
+      "actor_name": "Orchestrator",
+      "message": "Workflow execution started. 1 initial tasks dispatched.",
+      "metadata": {},
+      "created_at": "2026-10-07T12:10:06.818Z",
+      "id": "90baa79b-6cb3-48a8-a6b0-35ffd456da2d",
+      "updated_at": "2026-10-07T12:10:07.790Z"
+    },
+    {
+      "workflow_id": "df2fd155-37a3-4f2c-a823-46cc5ea34628",
+      "event_type": "WORKFLOW_CREATED",
+      "actor_type": "User",
+      "actor_name": "Demo Administrator",
+      "message": "Workflow \"Integration Test Incident\" created by Demo Administrator",
+      "metadata": {},
+      "created_at": "2026-10-07T12:20:39.187Z",
+      "id": "571953ff-0ab3-46f3-8d33-9f2d1c5c7f28",
+      "updated_at": "2026-10-07T12:20:39.440Z"
     }
   ],
   "approvals": [
@@ -713,7 +1234,7 @@
       "updated_at": "2026-10-07T09:53:30.338Z"
     },
     {
-      "name": "Google User",
+      "name": "Operator 7901",
       "email": "google.7901@workflowx.ai",
       "password_hash": "$2a$10$H9pk9O3pje81zJ4LRJBeVO23nayZhIX0ELQzMoWSeRPNhdJP7YH76",
       "role": "user",
@@ -722,13 +1243,76 @@
       "updated_at": "2026-10-07T10:03:42.526Z"
     },
     {
-      "name": "Google User",
+      "name": "Operator 5169",
       "email": "google.5169@workflowx.ai",
       "password_hash": "$2a$10$7UKyPcBwgNG9RYJ.udVTHub2SV81glrNMqTqvVYX8hNwuxR4D/uRO",
       "role": "user",
       "id": "d0bb9c46-55dc-4627-9309-0311baa38c75",
       "created_at": "2026-10-07T10:03:56.080Z",
       "updated_at": "2026-10-07T10:03:56.080Z"
+    },
+    {
+      "name": "Divya Gunda (Lead Operator)",
+      "email": "divya.gunda.1791375555326@gmail.com",
+      "password_hash": "$2a$10$wQ3u9Rihc40X9PK3cDN7.uav0ArbwDFP9AnK9yZ6ZCYKpU4frMZPG",
+      "role": "user",
+      "id": "acedb5db-bb4c-4195-a685-3bfa1822c07e",
+      "created_at": "2026-10-07T12:19:16.693Z",
+      "updated_at": "2026-10-07T12:19:18.117Z"
+    },
+    {
+      "name": "Aarav Sharma 1791375556862",
+      "email": "aarav.sharma.1791375556862@gmail.com",
+      "password_hash": "$2a$10$UeZPGV.CajqEybNAdXyE8egxi9FPZ2Yn3aJEzwmUR.UF6lu3F3Gg2",
+      "role": "user",
+      "id": "0d4ae456-1785-447b-b35b-d56267de9ab7",
+      "created_at": "2026-10-07T12:19:17.628Z",
+      "updated_at": "2026-10-07T12:19:17.628Z"
+    },
+    {
+      "name": "Alexander Wright",
+      "email": "alexander.wright.1791375558305@company.com",
+      "password_hash": "$2a$12$fnR7a.3vBgS.Miv5/N5M/uGN8iYcvjB5PpQ.l0McQzuFQgh8cReSC",
+      "role": "user",
+      "id": "a2c318e1-1090-41fb-bb4c-0a766ecf2fa7",
+      "created_at": "2026-10-07T12:19:19.161Z",
+      "updated_at": "2026-10-07T12:19:19.161Z"
+    },
+    {
+      "name": "Divya Gunda (Lead Operator)",
+      "email": "divya.gunda.1791375616326@gmail.com",
+      "password_hash": "$2a$10$EEFwickXOGCSBwd7asSS/eTgKJzR42ki7ltor5P6nsKN.eJ2nxKFq",
+      "role": "user",
+      "id": "57efe44a-f118-4920-84c5-0e8b6f273754",
+      "created_at": "2026-10-07T12:20:18.998Z",
+      "updated_at": "2026-10-07T12:20:20.400Z"
+    },
+    {
+      "name": "Aarav Sharma",
+      "email": "aarav.sharma.1791375619174@gmail.com",
+      "password_hash": "$2a$10$tO1.m.zuDewzZZXG1htWdOOuK6IvktXgtRiLwAnQvE9aXzLGy6cse",
+      "role": "user",
+      "id": "90025bb2-48dc-4840-905a-eca3f605d60c",
+      "created_at": "2026-10-07T12:20:19.734Z",
+      "updated_at": "2026-10-07T12:20:20.088Z"
+    },
+    {
+      "name": "Alexander Wright",
+      "email": "alexander.wright.1791375620534@company.com",
+      "password_hash": "$2a$12$VbKNvNS3x60UapMVmyFbH.SrqFYaxLQFfdpZO8SH681wgxPsDerpe",
+      "role": "user",
+      "id": "3f889eb4-0ac2-49d3-a0c7-e4571446da81",
+      "created_at": "2026-10-07T12:20:22.928Z",
+      "updated_at": "2026-10-07T12:20:22.928Z"
+    },
+    {
+      "name": "Judge Tester",
+      "email": "judge_1791375637768@workflowx.ai",
+      "password_hash": "$2a$12$gPt5CrISOnMdSNn3nEhZY.q6PNomBbwCTeDP6p6T0Rq4jMrta1NyK",
+      "role": "user",
+      "id": "0da25cfd-1843-4668-b8d8-4f5b4e67bdb7",
+      "created_at": "2026-10-07T12:20:38.651Z",
+      "updated_at": "2026-10-07T12:20:38.651Z"
     }
   ]
 }

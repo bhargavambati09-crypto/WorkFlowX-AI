@@ -36,20 +36,27 @@ api.interceptors.response.use(
         });
       }
       if (url.includes('/auth/register')) {
+        let sentData = {};
+        try { sentData = typeof error.config.data === 'string' ? JSON.parse(error.config.data) : (error.config.data || {}); } catch (_) {}
+        const actualName = sentData.name || (sentData.email ? sentData.email.split('@')[0] : 'User');
         return Promise.resolve({
           data: {
             message: 'Registered successfully',
             token: 'demo-jwt-preview-token',
-            user: { id: '00000000-0000-0000-0000-000000000001', name: 'Operator', email: 'operator@workflowx.ai', role: 'user' },
+            user: { id: '00000000-0000-0000-0000-000000000001', name: actualName, email: sentData.email || 'user@workflowx.ai', role: 'user' },
           }
         });
       }
       if (url.includes('/auth/google')) {
+        let sentData = {};
+        try { sentData = typeof error.config.data === 'string' ? JSON.parse(error.config.data) : (error.config.data || {}); } catch (_) {}
+        const meta = sentData.user_metadata || {};
+        const actualName = meta.full_name || sentData.name || sentData.fullName || meta.name || (sentData.email ? sentData.email.split('@')[0] : 'User');
         return Promise.resolve({
           data: {
             message: 'Google authentication successful',
             token: 'demo-jwt-preview-token',
-            user: { id: '00000000-0000-0000-0000-000000000001', name: 'Google User', email: 'google.user@workflowx.ai', role: 'user' },
+            user: { id: '00000000-0000-0000-0000-000000000001', name: actualName, email: sentData.email || 'user@workflowx.ai', role: 'user' },
           }
         });
       }
@@ -57,7 +64,7 @@ api.interceptors.response.use(
         const saved = localStorage.getItem('user');
         return Promise.resolve({
           data: {
-            user: saved ? JSON.parse(saved) : { id: '00000000-0000-0000-0000-000000000001', name: 'Demo Administrator', email: 'demo@workflowx.ai', role: 'admin' },
+            user: saved ? JSON.parse(saved) : { id: '00000000-0000-0000-0000-000000000001', name: 'User', email: 'user@workflowx.ai', role: 'user' },
           }
         });
       }
@@ -135,6 +142,7 @@ export const authAPI = {
   login: (data) => api.post('/auth/login', data),
   googleAuth: (data) => api.post('/auth/google', data),
   me: () => api.get('/auth/me'),
+  updateProfile: (data) => api.put('/auth/me', data),
 };
 
 // Workflows
