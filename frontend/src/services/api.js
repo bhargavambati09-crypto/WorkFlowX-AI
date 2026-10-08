@@ -2,7 +2,7 @@ import axios from 'axios';
 import { DEMO_WORKFLOW, DEMO_STATS } from './mockData';
 
 const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
-const API_URL = import.meta.env.VITE_API_URL || (isLocalhost ? 'http://localhost:5000' : '');
+const API_URL = import.meta.env.VITE_API_URL || (isLocalhost ? 'http://localhost:5000' : 'https://workflowx-ai-q5gs.onrender.com');
 
 const api = axios.create({
   baseURL: API_URL ? `${API_URL}/api` : '/api',

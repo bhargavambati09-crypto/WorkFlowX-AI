@@ -1,10 +1,11 @@
 services:
   - type: web
-    name: workflowx-ai-backend
+    name: WorkFlowX-AI
     env: node
     plan: free
+    rootDir: backend
     buildCommand: npm install
-    startCommand: npm start
+    startCommand: node server.js
     healthCheckPath: /health
     envVars:
       - key: NODE_ENV
@@ -17,9 +18,11 @@ services:
         sync: false
       - key: GEMINI_API_KEY
         sync: false
+      - key: GEMINI_MODEL
+        value: gemini-3.1-flash-lite
       - key: JWT_SECRET
         generateValue: true
       - key: FRONTEND_URL
-        sync: false
+        value: https://workflow-ai-org.netlify.app
       - key: AI_CONFIDENCE_THRESHOLD
         value: 0.75
